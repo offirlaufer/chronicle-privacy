@@ -3,7 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>מדיניות פרטיות — כרוניקל (Chronicle)</title>
+<title>כרוניקל — Chronicle</title>
+<meta name="description" content="כרוניקל — מעקב בריאות ורווחה אישית. המידע נשמר במכשיר שלך בלבד.">
+<!--
+  The publisher's one-page site. Play requires an organization account to
+  provide a website; a bare privacy policy at a URL satisfies the field and
+  reads like a form being filled, so this is the page that says who publishes
+  the app and what it does.
+
+  Publishes to the root of offirlaufer/chronicle-privacy, at which point the
+  policy moves to privacy/index.html and the link below starts resolving.
+  Both halves of that move happen in one pass, together with the custom
+  domain — see tools/publish_privacy.sh (DEST_PATH).
+
+  Styling is deliberately the same as privacy_policy.html: the two pages sit
+  one click apart and should not look like different sites.
+-->
 <style>
   :root { --teal:#006D77; --ink:#1A1A2E; --muted:#5b6670; }
   * { box-sizing:border-box; }
@@ -13,203 +28,103 @@
   main { max-width:760px; margin:0 auto; padding:28px 20px 60px; }
   .card { background:#fff; border-radius:16px; padding:22px 24px; margin:16px 0;
     box-shadow:0 2px 10px rgba(0,0,0,.05); }
-  h1 { font-size:1.6rem; margin:.2em 0; color:var(--teal); }
+  h1 { font-size:1.9rem; margin:.2em 0; color:var(--teal); }
   h2 { font-size:1.15rem; margin:1.4em 0 .4em; color:var(--teal); }
-  .meta { color:var(--muted); font-size:.9rem; }
+  .tagline { font-size:1.05rem; color:var(--muted); margin:.2em 0 1.2em; }
   ul { padding-inline-start:1.2em; } li { margin:.3em 0; }
   a { color:var(--teal); }
   hr { border:none; border-top:1px solid #dfe6ec; margin:34px 0; }
   .en { direction:ltr; text-align:left; }
   .en h1, .en h2 { text-align:left; }
-  code { background:#eef2f5; padding:1px 5px; border-radius:5px; font-size:.9em; }
+  .pill { display:inline-block; background:#e6f0f1; color:var(--teal);
+    border-radius:999px; padding:3px 12px; font-size:.85rem; margin-bottom:6px; }
+  footer { color:var(--muted); font-size:.9rem; margin-top:28px; }
 </style>
 </head>
 <body>
 <main>
-  <h1>מדיניות פרטיות — כרוניקל (Chronicle)</h1>
-  <p class="meta">תאריך עדכון אחרון: <strong>19 באוקטובר 2026</strong></p>
-  <p class="meta"><strong>מי אחראי למידע:</strong> אופיר לאופר, עוסק פטור הרשום
-    בישראל — המפתח והמפרסם של כרוניקל. &quot;אנחנו&quot; במסמך זה מתייחס לעסק
-    זה, שאינו מעסיק עובדים ואינו מפעיל שרתים.<br>
+
+  <span class="pill">אפליקציה לאנדרואיד</span>
+  <h1>כרוניקל</h1>
+  <p class="tagline">מעקב בריאות ורווחה אישית — <strong>המידע נשמר במכשיר שלך,
+    לא אצלנו.</strong></p>
+
+  <div class="card">
+    <h2>מה האפליקציה עושה</h2>
+    <p>כרוניקל מאפשרת לתעד לאורך זמן את מה שמשפיע על איך שאתה מרגיש, ולראות
+    את הקשרים ביניהם:</p>
+    <ul>
+      <li>סימפטומים, מצב רוח ושינה;</li>
+      <li>תזונה, פעילות גופנית ותרופות;</li>
+      <li>מדדים ביומטריים, בדיקות מעבדה ומבחנים קוגניטיביים;</li>
+      <li>תובנות ודוחות תקופתיים שמבוססים על מה שתיעדת.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>פרטיות היא המבנה, לא הבטחה</h2>
+    <p>אין שרתים, אין חשבונות משתמש, אין פרסום, אין אנליטיקה ואין כלי מעקב.
+    המידע נשמר מקומית במכשיר. אם גיבוי מערכת ההפעלה פעיל, עותק נשמר
+    <strong>בחשבון הענן הפרטי שלך</strong> — לא אצלנו, ואיננו מקבלים ממנו דבר.</p>
+    <p><a href="privacy/">מדיניות הפרטיות המלאה</a></p>
+  </div>
+
+  <div class="card">
+    <h2>אינו ייעוץ רפואי</h2>
+    <p>כרוניקל היא כלי מידע ורווחה. היא אינה מכשיר רפואי ואינה מהווה ייעוץ,
+    אבחון או טיפול רפואי.</p>
+  </div>
+
+  <footer>
+    <p><strong>המפתח והמפרסם:</strong> אופיר לאופר, עוסק פטור הרשום בישראל
+    (כינוי העסק: Chronicle).<br>
     <strong>יצירת קשר:</strong>
     <a href="mailto:offirlaufer@gmail.com">offirlaufer@gmail.com</a></p>
-
-  <div class="card">
-    <h2>תמצית</h2>
-    <p>כרוניקל היא אפליקציה לניהול בריאות ורווחה אישית.
-    <strong>המידע שלך נשמר במכשיר שלך — לא אצלנו.</strong> איננו מפעילים שרתים,
-    איננו אוספים מידע אישי, איננו משתפים או מוכרים מידע, ואין באפליקציה חשבונות
-    משתמש, פרסום, אנליטיקה או כלי מעקב. אם גיבוי מערכת ההפעלה פעיל במכשיר, עותק
-    עשוי להישמר גם בחשבון הענן הפרטי שלך — ראו
-    &quot;איזה מידע נשמר, והיכן&quot;.</p>
-  </div>
-
-  <div class="card">
-    <h2>מה יקרה אם זה ישתנה</h2>
-    <p>כל מה שכתוב כאן נכון לגרסה הנוכחית. אם אי־פעם נוסיף משהו ששולח מידע מהמכשיר
-    החוצה — למשל סנכרון, גיבוי משלנו או סטטיסטיקה מצטברת על בסיס משתמשים —
-    <strong>זה יהיה בבחירה שלך, כבוי כברירת מחדל, ונכתוב זאת כאן לפני שהתכונה
-    תגיע אליך.</strong> לא נהפוך מידע שכבר תיעדת למשהו שנשלח החוצה בלי שתאשר זאת.</p>
-  </div>
-
-  <div class="card">
-    <h2>איזה מידע נשמר, והיכן</h2>
-    <p>האפליקציה מאפשרת לתעד, בין היתר: סימפטומים, מצב רוח, שינה, תזונה, פעילות
-    גופנית, תרופות, מדדים ביומטריים, בדיקות מעבדה, מבחנים קוגניטיביים, מידע על
-    מחזור, פרופיל הורי וילדים, והיסטוריה רפואית. כל הנתונים הללו:</p>
-    <ul>
-      <li>נשמרים <strong>מקומית על המכשיר</strong> (מסד נתונים והעדפות מקומיים);</li>
-      <li><strong>אינם נשלחים</strong> לשרת שלנו או לצד שלישי;</li>
-      <li><strong>ניתנים לגיבוי בגיבוי מערכת ההפעלה</strong> (Android Auto Backup /
-        iCloud), אל <strong>חשבון הענן הפרטי שלך</strong> בלבד. באנדרואיד 9 ומעלה הגיבוי
-        מוצפן בצד המכשיר באמצעות קוד הנעילה שלך. הגיבוי אינו עובר דרכנו ואיננו
-        מקבלים ממנו דבר; ניתן לכבות אותו בהגדרות המכשיר;</li>
-      <li>תמונות גוף <strong>אינן</strong> נכללות בגיבוי הענן (מגבלת נפח של מערכת ההפעלה),
-        אך כן בהעברה ישירה בין מכשירים ובייצוא היזום מהאפליקציה;</li>
-      <li>נמחקים כשמוחקים אותם באפליקציה או מסירים את האפליקציה.</li>
-    </ul>
-  </div>
-
-  <div class="card">
-    <h2>הרשאות ולמה הן נדרשות</h2>
-    <p>רובן משמשות לתפקוד מקומי בלבד, ואף אחת מהן אינה משמשת לאיסוף המידע שתיעדת
-    או לשליחתו אלינו.</p>
-    <ul>
-      <li><strong>גישה לנתוני שימוש</strong> — לחישוב &quot;זמן מסך&quot; יומי מקומית.</li>
-      <li><strong>Health Connect</strong> — קריאת נתוני בריאות שכבר נמצאים
-        ב-Health Connect שבמכשיר, לצורך תובנות: שינה, צעדים, דופק במנוחה, שונות
-        קצב הלב, אימונים, מרחק, קלוריות (סך הכול ופעילות), ריווי חמצן בדם ולחץ
-        דם. ההרשאה כוללת גם קריאה כשהאפליקציה אינה פתוחה וקריאת היסטוריה מעבר
-        ל-30 יום, משום שחלק מהתובנות מסתמכות על טווח של עד שנה. הנתונים נקראים
-        מהמכשיר ונשארים בו. את ההרשאות אתה נותן ב-Health Connect וניתן לבטל
-        אותן שם בכל עת.</li>
-      <li><strong>מיקרופון והקלטת שמע</strong> — לניתוח קול ובדיקות שמיעה, וכן
-        ל<strong>ניטור שינה</strong>: אם תפעיל אותו, שירות בחזית משאיר את
-        המיקרופון פעיל בזמן השינה כדי לזהות נחירות. הניטור
-        <strong>כבוי כברירת מחדל</strong>, פועל רק בלילות שבהם הפעלת אותו
-        במפורש, ומוצג כהתראה קבועה כל עוד הוא פעיל.
-        <strong>השמע אינו נשמר</strong> — הוא מנותח בזיכרון ונמחק, ומה שנרשם
-        ביומן הוא מספר דקות הנחירה בלבד. ראו &quot;שירותי מערכת&quot; לגבי
-        זיהוי דיבור.</li>
-      <li><strong>זיהוי פעילות / חיישנים</strong> — לצעדים ולבדיקות שיווי משקל, מקומית.</li>
-      <li><strong>מצלמה ופנס</strong> — לשני שימושים: תמונות שאתה בוחר או מצלם
-        (למשל תמונות גוף), שנשמרות מקומית; ומדידת דופק באמצעות המצלמה האחורית
-        והפנס, שבה הפריימים מעובדים בזיכרון ונמחקים — לא נשמרת תמונה ולא נשלח
-        דבר.</li>
-      <li><strong>התראות, אזעקות מדויקות, הפעלה באתחול, שירות בחזית</strong> —
-        לתזכורות ולמדידות מתמשכות מקומיות.</li>
-      <li><strong>גישה לרשת</strong> — מגיעה עם רכיב החיוב של Google Play, שנכלל
-        לצורך רכישות בתוך האפליקציה. הוא מתקשר עם Google Play לגבי רכישה, וכמו
-        רכיבי Google אחרים עשוי לדווח ל-Google נתוני אבחון משלו.
-        <strong>המידע שתיעדת אינו נשלח דרכו, ולא לשום מקום אחר.</strong></li>
-    </ul>
-  </div>
-
-  <div class="card">
-    <h2>שירותי מערכת (צד שלישי)</h2>
-    <p><strong>זיהוי דיבור:</strong> תכונות דיבור עשויות להשתמש במנוע זיהוי הדיבור
-    של המכשיר. בחלק מהמכשירים/ההגדרות, מנוע זה עשוי לעבד שמע דרך ספק המערכת (למשל
-    Google). איננו שולטים בכך ואיננו מקבלים את השמע. ניתן להימנע משימוש בתכונות
-    הדיבור.</p>
-    <p><strong>גופנים:</strong> גופן Rubik מוטמע באפליקציה והורדת גופנים בזמן
-    ריצה מושבתת, כך שהאפליקציה אינה פונה לשרתי Google כדי להציג טקסט.</p>
-  </div>
-
-  <div class="card">
-    <h2>שיתוף וייצוא · ילדים · אבטחה</h2>
-    <p>מידע יוצא מהמכשיר רק כאשר <strong>אתה</strong> יוזם שיתוף/ייצוא, ליעד שאתה בוחר.
-    האפליקציה מיועדת למבוגרים (18+). היא אינה מיועדת לילדים ואינה אוספת מהם מידע
-    ביודעין; מודול
-    ההורות מיועד להורים המתעדים על ילדיהם — מידע זה נשמר במכשיר ככל שאר המידע
-    באפליקציה, ונכלל באותו גיבוי. המידע נשמר
-    באחסון הפרטי של האפליקציה בהתאם למנגנוני מערכת ההפעלה; מומלץ להשתמש בנעילת מסך.</p>
-    <p><strong>אינו ייעוץ רפואי:</strong> כרוניקל היא כלי מידע ורווחה, אינה מכשיר
-    רפואי ואינה מהווה ייעוץ, אבחון או טיפול רפואי.</p>
-  </div>
+  </footer>
 
   <hr>
 
   <div class="en">
-    <h1>Privacy Policy — Chronicle (כרוניקל)</h1>
-    <p class="meta">Last updated: <strong>October 19, 2026</strong></p>
-    <p class="meta"><strong>Who is responsible for your data:</strong> Offir
-      Laufer, a sole proprietor registered in Israel, is the developer and
-      publisher of Chronicle. &quot;We&quot; in this document means that
-      business, which has no employees and operates no servers.<br>
+    <span class="pill">Android app</span>
+    <h1>Chronicle</h1>
+    <p class="tagline">A personal health and wellbeing record —
+      <strong>your data stays on your device, not with us.</strong></p>
+
+    <div class="card">
+      <h2>What it does</h2>
+      <p>Chronicle lets you record what affects how you feel, over time, and
+      see how those things relate to each other:</p>
+      <ul>
+        <li>symptoms, mood and sleep;</li>
+        <li>nutrition, exercise and medications;</li>
+        <li>biometrics, lab results and cognitive tests;</li>
+        <li>insights and periodic reports built from what you logged.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Privacy is the architecture, not a promise</h2>
+      <p>No servers, no user accounts, no ads, no analytics, no trackers.
+      Everything is stored locally on the device. If your operating system's
+      backup is on, a copy also sits in <strong>your own cloud account</strong>
+      — not ours, and we receive nothing from it.</p>
+      <p><a href="privacy/">Read the full privacy policy</a></p>
+    </div>
+
+    <div class="card">
+      <h2>Not medical advice</h2>
+      <p>Chronicle is an information and wellbeing tool. It is not a medical
+      device and does not provide medical advice, diagnosis or treatment.</p>
+    </div>
+
+    <footer>
+      <p><strong>Developer and publisher:</strong> Offir Laufer, a sole
+      proprietor registered in Israel, trading as Chronicle.<br>
       <strong>Contact:</strong>
       <a href="mailto:offirlaufer@gmail.com">offirlaufer@gmail.com</a></p>
-    <div class="card">
-      <p><strong>Summary.</strong> Chronicle is a personal health &amp; wellness
-      tracker. <strong>Your data is stored on your device, not with us.</strong> We
-      operate no servers, collect no personal data, share or sell nothing, and
-      there are no accounts, ads, analytics, or trackers. If your device's own
-      backup is switched on, a copy may also sit in your own cloud account — see
-      &quot;Device backup&quot; below.</p>
-      <p><strong>If this ever changes.</strong> Everything here describes the
-      current version. If we ever add anything that sends data off your device —
-      sync, a backup of our own, aggregate statistics across users — <strong>it
-      will be your choice, off by default, and written here before it reaches
-      you.</strong> We will not turn data you have already logged into something
-      that gets sent out without your say-so.</p>
-      <p><strong>What is stored and where.</strong> Everything you log — symptoms,
-      mood, sleep, nutrition, exercise, medications, biometrics, lab results,
-      cognitive tests, menstrual data, a parenting profile about your child(ren),
-      and medical history — is stored <strong>locally on your device</strong>. It
-      is never sent to us or to any third party, and is deleted when you delete it
-      in-app or uninstall.</p>
-      <p><strong>Device backup.</strong> Your device's own operating-system backup
-      (Android Auto Backup, or iCloud on iOS) may copy this data to
-      <strong>your own</strong> cloud account so a new or reset phone can restore
-      it. On Android 9+ that backup is encrypted on the device with your
-      lock-screen credential. It goes to your account under your provider's terms
-      — it does not pass through us and we receive nothing from it. You can turn
-      it off in your device settings. Body photos are excluded from cloud backup
-      because of an operating-system size limit; they are included in
-      device-to-device transfer and in the app's own export.</p>
-      <p><strong>Permissions.</strong> None of them is used to collect what you
-      log or to send it to us: usage access (local screen-time),
-      activity/sensors (steps, balance), and notifications/alarms/foreground
-      service (local reminders &amp; measurements). Three deserve more detail:</p>
-      <ul>
-        <li><strong>Health Connect</strong> — reads health data already on your
-        device for insights: sleep, steps, resting heart rate, heart-rate
-        variability, workouts, distance, calories (total and active), blood
-        oxygen and blood pressure. The grant also covers reading while the app
-        is closed, and reading further back than 30 days, because some insights
-        look over a year. The data stays on the device. You grant these in
-        Health Connect and can revoke them there at any time.</li>
-        <li><strong>Microphone</strong> — voice-analysis and hearing features,
-        and <strong>sleep monitoring</strong>: if you switch it on, a foreground
-        service keeps the microphone live while you sleep in order to detect
-        snoring. It is <strong>off by default</strong>, runs only on nights you
-        start it, and shows a persistent notification the whole time it runs.
-        <strong>The audio is never saved</strong> — it is analysed in memory and
-        discarded, and only a count of snoring minutes is logged.</li>
-        <li><strong>Camera and torch</strong> — photos you choose or take (body
-        photos, for example), stored locally; and camera-based heart-rate
-        measurement using the rear camera and torch, where frames are processed
-        in memory and discarded. No image is kept and nothing is sent.</li>
-      </ul>
-      <p><strong>Network access.</strong> The app also has network access, which
-      comes with Google Play's billing component, included for in-app purchases.
-      It talks to Google Play about a purchase and, like other Google components,
-      may report its own diagnostics to Google. <strong>What you log is not sent
-      through it, or anywhere else.</strong></p>
-      <p><strong>Platform services.</strong> Speech features may use the device's
-      speech recognizer, which on some devices/configs may process audio via the
-      system provider (e.g., Google); we never receive the audio. Avoid the speech
-      features if you prefer. <strong>Fonts:</strong> Rubik is bundled with the
-      app and runtime font fetching is disabled, so the app does not call
-      Google's servers to render text.</p>
-      <p><strong>Sharing/export</strong> happens only when you initiate it, to a
-      destination you choose. <strong>Children:</strong> Chronicle is intended for
-      adults (18+). It is not directed at children and we do not knowingly collect
-      data from them; the parenting module is for parents logging about their own
-      child, and that data is stored on the device like everything else in the
-      app.
-      <strong>Not medical advice</strong> — Chronicle is not a medical device.</p>
-    </div>
+    </footer>
   </div>
+
 </main>
 </body>
 </html>
