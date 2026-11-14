@@ -3,21 +3,38 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>כרוניקל — Chronicle</title>
-<meta name="description" content="כרוניקל — מעקב בריאות ורווחה אישית. המידע נשמר במכשיר שלך בלבד.">
+<title>Chronicle — מעקב בריאות ותסמינים</title>
+<meta name="description" content="Chronicle — אפליקציה למעקב בריאות, תסמינים, שינה, תזונה ובדיקות דם, כולל ייבוא תוצאות מקובצי PDF של קופות החולים. איננו מפעילים שרתים ואיננו מקבלים את הנתונים.">
+<link rel="canonical" href="https://offirlaufer.com/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Chronicle — מעקב בריאות ותסמינים">
+<meta property="og:description" content="מעקב בריאות, תסמינים, שינה, תזונה ובדיקות דם — בלי שרתים ובלי חשבונות.">
+<meta property="og:url" content="https://offirlaufer.com/">
+<meta property="og:image" content="https://offirlaufer.com/assets/shot_01_home.jpg">
+<meta property="og:locale" content="he_IL">
 <!--
-  The publisher's one-page site. Play requires an organization account to
-  provide a website; a bare privacy policy at a URL satisfies the field and
-  reads like a form being filled, so this is the page that says who publishes
-  the app and what it does.
+  The publisher's one-page site — offirlaufer.com, GitHub Pages out of
+  offirlaufer/chronicle-privacy. The source of truth is
+  docs/play/landing_page.html in the Chronicle repo, and nothing syncs the
+  two automatically: see the header of tools/publish_privacy.sh for the day
+  the live privacy policy sat a version behind because of exactly that.
 
-  Publishes to the root of offirlaufer/chronicle-privacy, at which point the
-  policy moves to privacy/index.html and the link below starts resolving.
-  Both halves of that move happen in one pass, together with the custom
-  domain — see tools/publish_privacy.sh (DEST_PATH).
+  Rewritten 2026-11-14, with three jobs beyond "a website exists":
 
-  Styling is deliberately the same as privacy_policy.html: the two pages sit
-  one click apart and should not look like different sites.
+    * It is the only Hebrew text about this app that Google Search can
+      crawl — a Play listing is not indexed as a web page. That is what the
+      lab-import section is for: it names the thing people actually type.
+    * It carries the grandfathering date, which is the only urgency the
+      product has and appeared nowhere a reader would meet it.
+    * It links to the store, with screenshots, so arriving here can end in
+      an install rather than in a privacy policy.
+
+  ⚠️ The privacy wording is load-bearing and is NOT free text — see the
+  warning block in docs/play/store_listing.md. "נשמר במכשיר שלך בלבד" has
+  been forbidden since allowBackup went true on 2026-10-06, and the meta
+  description of the previous version of this page was still carrying it.
+  The claim that survives, and is the stronger one, is about what we do not
+  operate: no servers, and we receive nothing.
 -->
 <style>
   :root { --teal:#006D77; --ink:#1A1A2E; --muted:#5b6670; }
@@ -38,6 +55,15 @@
   .en h1, .en h2 { text-align:left; }
   .pill { display:inline-block; background:#e6f0f1; color:var(--teal);
     border-radius:999px; padding:3px 12px; font-size:.85rem; margin-bottom:6px; }
+  .cta { display:inline-block; background:var(--teal); color:#fff;
+    text-decoration:none; border-radius:999px; padding:11px 26px;
+    font-weight:600; margin:6px 0 2px; }
+  .shots { display:flex; gap:12px; overflow-x:auto; padding:4px 0 10px;
+    scroll-snap-type:x mandatory; }
+  .shots img { width:220px; height:auto; flex:0 0 auto; border-radius:14px;
+    scroll-snap-align:center; box-shadow:0 2px 12px rgba(0,0,0,.08); }
+  .note { background:#fdf8e7; border:1px solid #efe2b0; border-radius:14px;
+    padding:16px 20px; margin:16px 0; }
   footer { color:var(--muted); font-size:.9rem; margin-top:28px; }
 </style>
 </head>
@@ -45,20 +71,46 @@
 <main>
 
   <span class="pill">אפליקציה לאנדרואיד</span>
-  <h1>כרוניקל</h1>
-  <p class="tagline">מעקב בריאות ורווחה אישית — <strong>המידע נשמר במכשיר שלך,
-    לא אצלנו.</strong></p>
+  <h1>Chronicle</h1>
+  <p class="tagline">מעקב בריאות ותסמינים — <strong>איננו מפעילים שרתים
+    ואיננו מקבלים את הנתונים.</strong></p>
+
+  <p><a class="cta" href="https://play.google.com/store/apps/details?id=com.symptomics.chronicle">להורדה מ-Google&nbsp;Play</a></p>
+
+  <div class="shots">
+    <img src="assets/shot_01_home.jpg" width="220" height="391" loading="lazy"
+         alt="מסך הבית של Chronicle — ציון בריאות יומי, צעדים וזמן מסך">
+    <img src="assets/shot_03_bodymap.jpg" width="220" height="391" loading="lazy"
+         alt="מפת גוף לסימון מקום הכאב">
+    <img src="assets/shot_06_food.jpg" width="220" height="391" loading="lazy"
+         alt="מעקב תזונה לפי חלוקת הצלחת המומלצת">
+  </div>
 
   <div class="card">
     <h2>מה האפליקציה עושה</h2>
-    <p>כרוניקל מאפשרת לתעד לאורך זמן את מה שמשפיע על איך שאתה מרגיש, ולראות
-    את הקשרים ביניהם:</p>
+    <p>Chronicle מאפשרת לתעד לאורך זמן את מה שמשפיע על איך שאת/ה מרגיש/ה,
+    ולראות את הקשרים ביניהם:</p>
     <ul>
-      <li>סימפטומים, מצב רוח ושינה;</li>
+      <li>סימפטומים, תסמינים, מצב רוח ושינה;</li>
       <li>תזונה, פעילות גופנית ותרופות;</li>
-      <li>מדדים ביומטריים, בדיקות מעבדה ומבחנים קוגניטיביים;</li>
+      <li>מדדים ביומטריים, בדיקות דם ומבחנים קוגניטיביים;</li>
       <li>תובנות ודוחות תקופתיים שמבוססים על מה שתיעדת.</li>
     </ul>
+  </div>
+
+  <div class="card">
+    <h2>ייבוא תוצאות בדיקות דם מקובצי PDF</h2>
+    <p>את קובץ ה-PDF של תוצאות הבדיקות מקופת החולים אפשר לייבא ישירות
+    לאפליקציה: Chronicle קוראת את שמות הבדיקות, את התוצאות, את טווחי הייחוס
+    ואת התאריכים, ושומרת אותם כמדדים שאפשר לעקוב אחריהם לאורך זמן — בלי
+    להקליד שורה אחת.</p>
+    <p>הקריאה מתבצעת במכשיר עצמו. הקובץ אינו נשלח לשום מקום.</p>
+  </div>
+
+  <div class="note">
+    <strong>האפליקציה חינמית.</strong> כל מי שמתקין ופותח אותה עד
+    <strong>1 בינואר 2027</strong> ישמור על גישה מלאה לכל התכונות — גם אם
+    בהמשך יתווסף מסלול בתשלום.
   </div>
 
   <div class="card">
@@ -71,8 +123,8 @@
 
   <div class="card">
     <h2>אינו ייעוץ רפואי</h2>
-    <p>כרוניקל היא כלי מידע ורווחה. היא אינה מכשיר רפואי ואינה מהווה ייעוץ,
-    אבחון או טיפול רפואי.</p>
+    <p>Chronicle היא כלי מידע ורווחה. היא אינה מכשיר רפואי ואינה מהווה ייעוץ,
+    אבחון או טיפול רפואי. בכל שאלה רפואית יש לפנות לאיש מקצוע.</p>
   </div>
 
   <footer>
@@ -87,8 +139,10 @@
   <div class="en">
     <span class="pill">Android app</span>
     <h1>Chronicle</h1>
-    <p class="tagline">A personal health and wellbeing record —
-      <strong>your data stays on your device, not with us.</strong></p>
+    <p class="tagline">A personal health and symptom record —
+      <strong>we run no servers and never receive your data.</strong></p>
+
+    <p><a class="cta" href="https://play.google.com/store/apps/details?id=com.symptomics.chronicle">Get it on Google&nbsp;Play</a></p>
 
     <div class="card">
       <h2>What it does</h2>
@@ -97,7 +151,7 @@
       <ul>
         <li>symptoms, mood and sleep;</li>
         <li>nutrition, exercise and medications;</li>
-        <li>biometrics, lab results and cognitive tests;</li>
+        <li>biometrics, blood-test results and cognitive tests;</li>
         <li>insights and periodic reports built from what you logged.</li>
       </ul>
     </div>
@@ -126,5 +180,21 @@
   </div>
 
 </main>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Chronicle",
+  "applicationCategory": "HealthApplication",
+  "operatingSystem": "Android",
+  "inLanguage": "he-IL",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "ILS" },
+  "description": "מעקב בריאות, תסמינים, שינה, תזונה ובדיקות דם, כולל ייבוא תוצאות מקובצי PDF של קופות החולים. המידע נשמר במכשיר; איננו מפעילים שרתים.",
+  "url": "https://offirlaufer.com/",
+  "installUrl": "https://play.google.com/store/apps/details?id=com.symptomics.chronicle",
+  "author": { "@type": "Organization", "name": "Chronicle", "email": "offirlaufer@gmail.com" }
+}
+</script>
 </body>
 </html>
