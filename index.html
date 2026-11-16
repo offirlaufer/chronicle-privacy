@@ -6,6 +6,8 @@
 <title>Chronicle — מעקב בריאות ותסמינים</title>
 <meta name="description" content="Chronicle — אפליקציה למעקב בריאות, תסמינים, שינה, תזונה ובדיקות דם, כולל ייבוא תוצאות מקובצי PDF של קופות החולים. איננו מפעילים שרתים ואיננו מקבלים את הנתונים.">
 <link rel="canonical" href="https://offirlaufer.com/">
+<link rel="icon" href="assets/logo.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/logo.png">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Chronicle — מעקב בריאות ותסמינים">
 <meta property="og:description" content="מעקב בריאות, תסמינים, שינה, תזונה ובדיקות דם — בלי שרתים ובלי חשבונות.">
@@ -35,102 +37,356 @@
   description of the previous version of this page was still carrying it.
   The claim that survives, and is the stronger one, is about what we do not
   operate: no servers, and we receive nothing.
+
+  ── Layout pass, 2026-11-15 ────────────────────────────────────────────
+  The container was 760px, which on a laptop is a column of text down the
+  middle of a very empty page. It is 1140px now, and the width is spent on
+  the two things that were actually cramped — the screenshot strip, which
+  now shows all five frames without scrolling on a desktop, and the content
+  sections, which sit in a two-column grid.
+
+  It is NOT spent on the prose: a paragraph set 1100px wide runs past 130
+  characters a line and is harder to read than the narrow version was. The
+  grid is what keeps each column near a 60-character measure while the page
+  itself is wide. If a section is ever added, put it in the grid; only the
+  pricing note spans both columns, because a promise with a date in it
+  should not be something the eye can skip past in a side column.
 -->
 <style>
-  :root { --teal:#006D77; --ink:#1A1A2E; --muted:#5b6670; }
+  :root {
+    --teal:#006D77;        /* the app's accent, and the store listings' */
+    /* The motto only. At 1.22rem the accent teal sat between the black
+       wordmark above it and the grey sentence below and read as neither;
+       it is the line that has to carry the name, so it is bigger (1.6rem),
+       bolder (700) and a shade down the same hue. 6.1:1 on the surface
+       becomes 9.3:1, which is what "more prominent" actually is. Same hue
+       as --teal on purpose - a second accent would be a second colour. */
+    --teal-deep:#004F57;
+    /* The wordmark only, NOT --ink: body text stays the near-black it was.
+       #1A1A2E read as flat black at display size against a white page; this
+       is bluer and a step lighter, which also stops the name fighting the
+       teal motto directly under it. 10.4:1 on white, so "lighter" costs
+       nothing that matters. Four candidates were put on screen TOGETHER at
+       full size before picking - at 3.9rem a hue is a different decision
+       than it is in a swatch, and the darkest two, which looked like the
+       obvious choices as hex values, both read as plain black on the page.
+       This is the third of the four; the fourth (#3A4E7A, 8.2:1) was on
+       the page briefly and went one step back toward the ink. */
+    --wordmark:#2E3F66;
+    --ink:#1A1A2E;         /* tinted near-black, never #000 */
+    --muted:#5b6670;
+    --surface:#fffefc;     /* warmed a hair toward the logo, never pure white */
+    --line:#dfe6ec;
+  }
   * { box-sizing:border-box; }
-  body { margin:0; background:#f0f4f8; color:var(--ink);
+  /* White, not the blue-grey it was. The screenshot frames went lighter on
+     2026-11-15 and read BETTER against white than against a tint - they
+     carry their own pale gradient, so a tinted page was competing with
+     them rather than holding them. The cost lands on the content cards
+     below, which are near-white themselves: see `.card`. */
+  body { margin:0; background:#fff; color:var(--ink);
     font-family:-apple-system,"Segoe UI",Roboto,Arial,"Noto Sans Hebrew",sans-serif;
     line-height:1.65; }
-  main { max-width:760px; margin:0 auto; padding:28px 20px 60px; }
-  .card { background:#fff; border-radius:16px; padding:22px 24px; margin:16px 0;
-    box-shadow:0 2px 10px rgba(0,0,0,.05); }
-  h1 { font-size:1.9rem; margin:.2em 0; color:var(--teal); }
-  h2 { font-size:1.15rem; margin:1.4em 0 .4em; color:var(--teal); }
-  .tagline { font-size:1.05rem; color:var(--muted); margin:.2em 0 1.2em; }
-  ul { padding-inline-start:1.2em; } li { margin:.3em 0; }
+  main { max-width:1140px; margin:0 auto; padding:28px 20px 60px; }
+
+  /* ── Hero ───────────────────────────────────────────────────────────── */
+  .hero { text-align:center; padding:8px 0 4px; }
+  .hero .logo { width:104px; height:104px; border-radius:24px; display:block;
+    margin:0 auto 14px; box-shadow:0 4px 18px rgba(0,0,0,.10); }
+  .hero h1 { color:var(--wordmark); font-size:clamp(2.5rem,7vw,3.9rem);
+    line-height:1.05; letter-spacing:-.02em; margin:.08em 0 .12em;
+    text-align:center; }
+  /* A silver glint that crosses the wordmark every few seconds.
+     The BASE text is untouched and stays solid `--ink`. The sheen is a
+     second copy of the word, laid exactly over it and clipped to the
+     glyphs, carrying nothing but a moving highlight band - so this is a
+     transient reflection, not the word being filled with a gradient.
+
+     Three things it has to survive:
+     - A browser without `background-clip:text` would paint the overlay as
+       a GRADIENT RECTANGLE across the title. The @supports below is what
+       stops that: the copy is `display:none` until the clip is available.
+     - The duplicate word is `aria-hidden`, or a screen reader says
+       "Chronicle Chronicle".
+     - `prefers-reduced-motion` removes it outright rather than slowing
+       it. A sweep over a NAME is decoration; there is nothing to convey
+       more gently.
+
+     The sweep takes a quarter of the cycle and the rest is a hold, so it
+     reads as an occasional glint rather than as something in constant
+     motion. `inset:0` lands the copy exactly because the h1 is shrunk to
+     its text by `display:inline-block`. */
+  .hero h1 { position:relative; display:inline-block; }
+  .hero h1 .sheen { display:none; }
+
+  @supports ((-webkit-background-clip:text) or (background-clip:text)) {
+    .hero h1 .sheen {
+      display:block; position:absolute; inset:0;
+      color:transparent; pointer-events:none;
+      background:linear-gradient(100deg,
+        rgba(255,255,255,0) 42%, rgba(206,216,222,.9) 47%,
+        #fff 50%, rgba(206,216,222,.9) 53%,
+        rgba(255,255,255,0) 58%);
+      background-size:280% 100%;
+      -webkit-background-clip:text; background-clip:text;
+      animation:sheen 7s cubic-bezier(.22,1,.36,1) 1.4s infinite;
+    }
+  }
+  @keyframes sheen {
+    0%   { background-position:150% 0; }
+    28%  { background-position:-50% 0; }
+    100% { background-position:-50% 0; }
+  }
+  @media (prefers-reduced-motion:reduce) {
+    .hero h1 .sheen { display:none; }
+  }
+  /* The line directly under the wordmark. It earns the NAME rather than
+     explaining the app: a chronicle is a record of events over time, and
+     the sentence below it already does the functional work. The possessive
+     also carries the privacy stance without claiming it twice. */
+  .hero .motto { font-size:1.6rem; font-weight:700; color:var(--teal-deep);
+    letter-spacing:0; margin:.12em 0 .55em; }
+  /* Two sentences, one line each, and neither of those falls out of the
+     measure by itself. `text-wrap:balance` splits the PARAGRAPH evenly,
+     so at 80ch it broke mid-sentence and put the tail of the first
+     sentence on the same row as the opening of the privacy one. Making
+     the <strong> a block is what moves the break to the full stop.
+     94ch is then the wider half's requirement, not a taste: the English
+     sentence measures 842px against 745px at 80ch, the Hebrew 635px.
+     Measured in the browser rather than counted off the string, because
+     the two scripts do not get the same width per character.
+     Longer than the 65-75ch body measure on purpose - this is a centred
+     two-line hero line, not a paragraph anyone reads down. On a phone
+     the container is narrower than 94ch anyway, so both halves wrap by
+     themselves and the cap never binds. */
+  .hero .tagline { font-size:1.08rem; color:var(--muted);
+    margin:.2em auto 1.1em; max-width:94ch; text-wrap:balance; }
+  .hero .tagline strong { display:block; }
+
+  /* ── Store badges ───────────────────────────────────────────────────
+     Official artwork only, unmodified: both Google and Apple require it,
+     and both specify a minimum size and clear space around the badge.
+     Height is set and width left to the aspect ratio so neither is
+     stretched. A badge with no live listing behind it is NOT a link —
+     is NOT a link; see .stores .as.                                     */
+  .stores { display:flex; gap:10px; justify-content:center; flex-wrap:wrap;
+    align-items:flex-start; margin:0 0 6px; padding:0; }
+  .stores .store { display:inline-flex; flex-direction:column;
+    align-items:center; gap:5px; cursor:default; }
+  .stores img { width:auto; display:block; }
+  /* The two badges are not the same shape of file and must not be given the
+     same height. Google ships its web badge on a 646x250 canvas whose black
+     pill occupies only the middle 67.2%; the rest is the clear space their
+     guidelines require, and it is part of the asset. Apple's SVG is tight to
+     the artwork. Set both to 44px and Google's reads a third smaller.
+     44 / 0.672 = 65, so the two pills match while each brand keeps its own
+     spacing rules. Measured from the files, not guessed. */
+  .stores .gp img { height:65px; }
+  .stores .as img { height:44px; }
+  .stores a { border-radius:9px; display:inline-flex; align-items:center;
+    transition:transform .18s cubic-bezier(.22,1,.36,1); }
+  .stores a:hover { transform:translateY(-2px); }
+  /* NEITHER badge is a link, and both are shown UNMODIFIED. Apple's
+     marketing guidelines forbid altering the artwork — a grayscale filter
+     and a dimmed opacity are both alterations, and the first version of
+     this did both. The caption underneath is what says a store is not live
+     yet; saying it in words is clearer than a visual state nobody decodes.
+     Google is not live either as of 2026-11-15 — that listing has never
+     been published, so the link it used to carry would have 404'd.
+
+     To turn one back on, swap its <span class="store"> for an <a href>.
+     The .stores a rules below are kept for exactly that. */
+  /* Google's clear space is inside its PNG, Apple's is not, so aligning the
+     two boxes leaves the two pills 23px apart vertically. 65 * 41/250 = 10.7
+     is exactly the space above Google's pill; giving Apple's the same puts
+     the artwork on one line.
+     The SAME amount below, for the same reason, and it is the captions that
+     need it: the badges are in a flex row of columns, so the caption starts
+     wherever its own badge box ends. With only the top margin Apple's box
+     was 55px to Google's 65 and the two captions sat 10px apart - the
+     artwork lined up and the words under it did not. Symmetric clear space
+     is what Apple's guidelines ask for anyway, so this is not an
+     alteration of the badge. */
+  .stores .as img { margin:11px 0 10px; }
+  /* ONE badge, and only for a store you can actually reach.
+     A badge is a call to action - "כעת ב-Google Play", "Download on the
+     App Store" - and neither can be reworded, because both brands forbid
+     altering the artwork. Google ships no "coming soon" badge at all; its
+     only other variant is Pre-register, which promises a button the
+     listing does not have. So a store that is not live says so in WORDS,
+     under the badge row, and gets its badge when it has a link behind it.
+
+     This is why the page must not go up before the Play listing does:
+     THE GOOGLE BADGE IS A LIVE LINK. Publishing is gated on Play clearing
+     anyway, and that gate is now load-bearing rather than a preference.
+     Apple's badge goes back the moment the app is approved - restore the
+     <a class="store as"> beside this one and delete its line from the
+     note. */
+  .store-note { color:var(--muted); font-size:.86rem; line-height:1.5;
+    text-align:center; margin:9px auto 0; max-width:46ch; }
+  .store small { font-size:.78rem; color:var(--muted); line-height:1.35;
+    text-align:center; max-width:32ch; }
+
+  /* ── Screenshots ────────────────────────────────────────────────────
+     Six frames in a 3x2 grid rather than one row of six. A single row put
+     each frame at 200px, where the app's own text inside the phone was too
+     small to read and the screenshots stopped doing the one job they have.
+     Three across the 1140px container is ~356px each, which is legible.
+     The size is set by capping the BLOCK, not the images: 836px across
+     three tracks and two 28px gaps puts each frame at 260px. The cap and
+     the gap are therefore ONE number - widen the gutters without moving
+     the cap and the frames shrink to pay for them. The row gap is larger
+     than the column gap (34 vs 28) because each card carries its heading
+     at the top, so the vertical neighbour it has to separate from is
+     text, not another phone. Four sizes
+     were looked at on screen rather than reasoned about — 200px in a
+     single row, where the app's own text inside the phone cannot be read
+     at all; 356px across the full container, overbearing; 282px; and this.
+     The track minimum is 240 rather than 260 ON PURPOSE: at exactly 260
+     the three tracks consume the block to the pixel, and any rounding
+     would drop the grid to two columns. 240 leaves the slack and still
+     forces three rather than four, which would need 1008px.              */
+  .shots { display:grid; gap:34px 28px; padding:10px 0 12px;
+    max-width:836px; margin-inline:auto;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); }
+  .shots img { width:100%; height:auto; border-radius:14px;
+    box-shadow:0 2px 12px rgba(0,0,0,.08); }
+
+  /* ── Content ────────────────────────────────────────────────────────── */
+  /* No align-items:start. The three cards hold different amounts of text,
+     and left to size themselves the row ended ragged along the bottom.
+     Stretched, they share the tallest height and the row reads as one
+     band. The note below spans all three. */
+  .grid { display:grid; gap:16px;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); }
+  .grid > .wide { grid-column:1 / -1; }
+  /* The hairline is what the white page costs. `--surface` is #fffefc, so
+     on #fff the card had a contrast ratio of about 1.00 against the page
+     and vanished - only the shadow still said where its edges were, which
+     is not a card, it is a smudge. A 1px line draws the edge properly and
+     lets the shadow drop back to a hint. */
+  .card { background:var(--surface); border-radius:16px; padding:22px 24px;
+    border:1px solid var(--line);
+    box-shadow:0 1px 3px rgba(16,42,46,.04); }
+  /* The card headings share the wordmark's colour, not the accent teal.
+     Teal is doing other work on this page - the motto, every link - and a
+     heading that matches a link reads as clickable. Matching the NAME
+     instead ties the three cards back to the thing they describe. */
+  h2 { font-size:1.15rem; margin:0 0 .4em; color:var(--wordmark); }
+  p { margin:.6em 0; }
+  ul { padding-inline-start:1.2em; margin:.6em 0; } li { margin:.3em 0; }
   a { color:var(--teal); }
-  hr { border:none; border-top:1px solid #dfe6ec; margin:34px 0; }
-  .en { direction:ltr; text-align:left; }
-  .en h1, .en h2 { text-align:left; }
-  .pill { display:inline-block; background:#e6f0f1; color:var(--teal);
-    border-radius:999px; padding:3px 12px; font-size:.85rem; margin-bottom:6px; }
-  .cta { display:inline-block; background:var(--teal); color:#fff;
-    text-decoration:none; border-radius:999px; padding:11px 26px;
-    font-weight:600; margin:6px 0 2px; }
-  .shots { display:flex; gap:12px; overflow-x:auto; padding:4px 0 10px;
-    scroll-snap-type:x mandatory; }
-  .shots img { width:220px; height:auto; flex:0 0 auto; border-radius:14px;
-    scroll-snap-align:center; box-shadow:0 2px 12px rgba(0,0,0,.08); }
-  .note { background:#fdf8e7; border:1px solid #efe2b0; border-radius:14px;
-    padding:16px 20px; margin:16px 0; }
+  hr { border:none; border-top:1px solid var(--line); margin:40px 0; }
+  .note { background:#fdf8e7; border:1px solid #efe2b0; border-radius:16px;
+    padding:18px 22px; }
+  /* "Not medical advice" was a card, which gave a disclaimer the same
+     weight as a feature and left the three-column grid with a hole beside
+     it. It is a line under the content now: still on every half of the
+     page, still complete, but reading as the small print it is. */
+  .disclaimer { color:var(--muted); font-size:.88rem; line-height:1.6;
+    margin:18px 2px 0; padding-top:14px; border-top:1px solid var(--line); }
   footer { color:var(--muted); font-size:.9rem; margin-top:28px; }
+
+  /* The English half mirrors the Hebrew one and runs left-to-right. The
+     hero stays centred in both; only the body copy changes side. */
+  .en { direction:ltr; text-align:left; }
+  .en h2 { text-align:left; }
 </style>
 </head>
 <body>
 <main>
 
-  <span class="pill">אפליקציה לאנדרואיד</span>
-  <h1>Chronicle</h1>
-  <p class="tagline">מעקב בריאות ותסמינים — <strong>איננו מפעילים שרתים
-    ואיננו מקבלים את הנתונים.</strong></p>
+  <div class="hero">
+    <img class="logo" src="assets/logo.png" width="104" height="104"
+         alt="הסמל של Chronicle — האות C בנויה מעלים">
+    <h1>Chronicle<span class="sheen" aria-hidden="true">Chronicle</span></h1>
+    <p class="motto">הבריאות שלך. הסיפור שלך.</p>
+    <p class="tagline">תעדו תסמינים, שינה, תזונה ופעילות, גלו את הקשרים
+      ביניהם ומה באמת משפיע עליכם.
+      <strong>איננו מפעילים שרתים ואיננו מקבלים את הנתונים.</strong></p>
 
-  <p><a class="cta" href="https://play.google.com/store/apps/details?id=com.symptomics.chronicle">להורדה מ-Google&nbsp;Play</a></p>
+    <div class="stores">
+      <!-- NOT a link while the listing is in review: the URL 404s until
+           Google approves it. Swap this <span> back to the <a href> kept in
+           git (commit 91f8537) the day Play goes live — the referrer tag on
+           that href is what makes site installs attributable. -->
+      <span class="store gp">
+        <img src="assets/badge-google-play-he.png" alt="Google Play">
+      </span>
+    </div>
+    <p class="store-note">האפליקציה נמצאת בבדיקה ב-Google Play ואצל Apple.
+    הקישורים יתווספו עם האישור.</p>
+  </div>
 
   <div class="shots">
-    <img src="assets/shot_01_home.jpg" width="220" height="391" loading="lazy"
+    <img src="assets/shot_01_home.jpg" width="480" height="853" loading="lazy"
          alt="מסך הבית של Chronicle — ציון בריאות יומי, צעדים וזמן מסך">
-    <img src="assets/shot_02_insights.jpg" width="220" height="391" loading="lazy"
-         alt="תמונת מצב — ציון יחסי לכל אחד מחמישה תחומי בריאות">
-    <img src="assets/shot_03_bodymap.jpg" width="220" height="391" loading="lazy"
-         alt="מפת גוף לסימון מקום הכאב">
-    <img src="assets/shot_05_weekly_digest.jpg" width="220" height="391" loading="lazy"
+    <img src="assets/shot_05_weekly_digest.jpg" width="480" height="853" loading="lazy"
          alt="סיכום שבועי — מים, צעדים, שינה ותזונה, יום אחר יום">
-    <img src="assets/shot_06_food.jpg" width="220" height="391" loading="lazy"
+    <img src="assets/shot_02_insights.jpg" width="480" height="853" loading="lazy"
+         alt="תמונת מצב — ציון יחסי לכל אחד מחמישה תחומי בריאות">
+    <img src="assets/shot_03_bodymap.jpg" width="480" height="853" loading="lazy"
+         alt="מפת גוף לסימון מקום הכאב">
+    <img src="assets/shot_06_food.jpg" width="480" height="853" loading="lazy"
          alt="מעקב תזונה לפי חלוקת הצלחת המומלצת">
+    <img src="assets/shot_04_cognitive.jpg" width="480" height="853" loading="lazy"
+         alt="בדיקות קוגניטיביות — זיכרון, קשב ומהירות עיבוד">
   </div>
 
-  <div class="card">
-    <h2>מה האפליקציה עושה</h2>
-    <p>Chronicle מאפשרת לתעד לאורך זמן את מה שמשפיע על איך שאת/ה מרגיש/ה,
-    ולראות את הקשרים ביניהם:</p>
-    <ul>
-      <li>סימפטומים, תסמינים, מצב רוח ושינה;</li>
-      <li>תזונה, פעילות גופנית ותרופות;</li>
-      <li>מדדים ביומטריים, בדיקות דם ומבחנים קוגניטיביים;</li>
-      <li>תובנות ודוחות תקופתיים שמבוססים על מה שתיעדת.</li>
-    </ul>
+  <div class="grid">
+    <div class="card">
+      <h2>מה מתעדים</h2>
+      <p>Chronicle מאפשרת לתעד לאורך זמן את מה שמשפיע על איך שאת/ה מרגיש/ה,
+      ולראות את הקשרים ביניהם:</p>
+      <ul>
+        <li>סימפטומים, תסמינים, מצב רוח ושינה;</li>
+        <li>תזונה, פעילות גופנית ותרופות;</li>
+        <li>מדדים ביומטריים, בדיקות דם, שאלונים ומבחנים קוגניטיביים.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>לא רק יומן</h2>
+      <ul>
+        <li><strong>ייבוא בדיקות דם מקובץ PDF</strong> — הקובץ מקופת החולים
+        נקרא במכשיר עצמו: שמות הבדיקות, התוצאות, טווחי הייחוס והתאריכים
+        נשמרים כמדדים שאפשר לעקוב אחריהם, בלי להקליד שורה אחת.</li>
+        <li><strong>קריאה משעון חכם</strong> — צעדים, דופק, שינה ואימונים,
+        דרך Health Connect.</li>
+        <li><strong>תיעוד קולי וסריקת ברקוד</strong> — במקום להקליד.</li>
+        <li><strong>ניסוי אישי</strong> — לבדוק אם שינוי אחד באמת משנה משהו
+        אצלך, ולראות מה יצא.</li>
+        <li><strong>מרכז ידע</strong> — כ-290 ערכים בריאותיים, מבדיקות
+        מעבדה ועד שינה, תזונה ובריאות הנפש: מה זה, למה זה משנה, מה משפיע
+        על זה ואילו אמונות נפוצות פשוט אינן נכונות. כל הערכים מבוססים על
+        מקורות רפואיים מוכרים.</li>
+        <li><strong>מדיטציות מודרכות</strong> — תשעה תרגולים מוקלטים,
+        ותרגילי נשימה מודרכים.</li>
+        <li><strong>תובנות ודוחות תקופתיים</strong> — מבוססים על מה
+        שתיעדת.</li>
+      </ul>
+    </div>
+
+
+    <div class="card">
+      <h2>הפרטיות קודמת לכול</h2>
+      <p>אין שרתים, אין חשבונות משתמש, אין פרסום, אין אנליטיקה ואין כלי מעקב.
+      המידע נשמר מקומית במכשיר. אם גיבוי מערכת ההפעלה פעיל, עותק נשמר
+      <strong>בחשבון הענן הפרטי שלך</strong> — לא אצלנו, ואיננו מקבלים ממנו דבר.</p>
+      <p><a href="privacy/">מדיניות הפרטיות המלאה</a> ·
+         <a href="terms/">תנאי השימוש</a></p>
+    </div>
+
+    <div class="note wide">
+      <strong>האפליקציה חינמית.</strong> מי שמתקין ומפעיל אותה לראשונה
+      <strong>לפני 1 בינואר 2027</strong> ימשיך לקבל ללא תשלום את התכונות
+      שפתוחות לו — גם אם בהמשך ייפתח מסלול בתשלום.
+    </div>
   </div>
 
-  <div class="card">
-    <h2>ייבוא תוצאות בדיקות דם מקובצי PDF</h2>
-    <p>את קובץ ה-PDF של תוצאות הבדיקות מקופת החולים אפשר לייבא ישירות
-    לאפליקציה: Chronicle קוראת את שמות הבדיקות, את התוצאות, את טווחי הייחוס
-    ואת התאריכים, ושומרת אותם כמדדים שאפשר לעקוב אחריהם לאורך זמן — בלי
-    להקליד שורה אחת.</p>
-    <p>הקריאה מתבצעת במכשיר עצמו. הקובץ אינו נשלח לשום מקום.</p>
-  </div>
-
-  <div class="note">
-    <strong>האפליקציה חינמית.</strong> מי שמתקין ומפעיל אותה לראשונה
-    <strong>לפני 1 בינואר 2027</strong> ימשיך לקבל ללא תשלום את התכונות
-    שפתוחות לו — גם אם בהמשך ייפתח מסלול בתשלום.
-  </div>
-
-  <div class="card">
-    <h2>פרטיות היא המבנה, לא הבטחה</h2>
-    <p>אין שרתים, אין חשבונות משתמש, אין פרסום, אין אנליטיקה ואין כלי מעקב.
-    המידע נשמר מקומית במכשיר. אם גיבוי מערכת ההפעלה פעיל, עותק נשמר
-    <strong>בחשבון הענן הפרטי שלך</strong> — לא אצלנו, ואיננו מקבלים ממנו דבר.</p>
-    <p><a href="privacy/">מדיניות הפרטיות המלאה</a> ·
-       <a href="terms/">תנאי השימוש</a></p>
-  </div>
-
-  <div class="card">
-    <h2>אינו ייעוץ רפואי</h2>
-    <p>Chronicle היא כלי מידע ורווחה. היא אינה מכשיר רפואי ואינה מהווה ייעוץ,
-    אבחון או טיפול רפואי. בכל שאלה רפואית יש לפנות לאיש מקצוע.</p>
-  </div>
+  <p class="disclaimer">Chronicle היא כלי מידע ורווחה. היא אינה מכשיר רפואי
+  ואינה מהווה ייעוץ, אבחון או טיפול רפואי. בכל שאלה רפואית יש לפנות לאיש
+  מקצוע.</p>
 
   <footer>
     <p><strong>המפתח והמפרסם:</strong> אופיר לאופר, עוסק פטור הרשום בישראל
@@ -151,71 +407,107 @@
     (com.symptomics.chronicle.en — see docs/play/store_listing.md and the
     two-editions note in memory). When it is live, this half's CTA changes and
     the Hebrew one does not.
+
+    The screenshots below are the ENGLISH frames (`shot_*_en.jpg`), shot
+    from the English build on 2026-11-15 with English headlines. Until then
+    this half showed the Hebrew ones, headlines burnt in — an English reader
+    looking at an app in a script they could not read. Both sets are built
+    by tools/store_mockups.py and sized by tools/site_shots.py; keep them in
+    step, because nothing checks that the two halves show the same screens.
   -->
   <div class="en">
-    <span class="pill">Android app</span>
-    <h1>Chronicle</h1>
-    <p class="tagline">A personal health and symptom record —
-      <strong>we run no servers and never receive your data.</strong></p>
+    <div class="hero">
+      <img class="logo" src="assets/logo.png" width="104" height="104"
+           alt="The Chronicle mark — the letter C built from leaves">
+      <h1>Chronicle<span class="sheen" aria-hidden="true">Chronicle</span></h1>
+      <p class="motto">Your Health. Your Story.</p>
+      <p class="tagline">Track symptoms, sleep, food and activity, see the
+        patterns between them, and what makes a difference for you.
+        <strong>We run no servers and never receive your data.</strong></p>
 
-    <p><a class="cta" href="https://play.google.com/store/apps/details?id=com.symptomics.chronicle">Get it on Google&nbsp;Play</a></p>
+      <div class="stores">
+        <span class="store gp">
+          <img src="assets/badge-google-play-en.png" alt="Google Play">
+        </span>
+      </div>
+      <p class="store-note">The app is in review with Google Play and with
+      Apple. The links go up on approval.</p>
+    </div>
 
     <div class="shots">
-      <img src="assets/shot_01_home.jpg" width="220" height="391" loading="lazy"
+      <img src="assets/shot_01_home_en.jpg" width="480" height="853" loading="lazy"
            alt="Chronicle's home screen — daily health score, steps and screen time">
-      <img src="assets/shot_02_insights.jpg" width="220" height="391" loading="lazy"
-           alt="Snapshot — a relative score for each of five health domains">
-      <img src="assets/shot_03_bodymap.jpg" width="220" height="391" loading="lazy"
-           alt="A body map for marking where it hurts">
-      <img src="assets/shot_05_weekly_digest.jpg" width="220" height="391" loading="lazy"
+      <img src="assets/shot_05_weekly_digest_en.jpg" width="480" height="853" loading="lazy"
            alt="Weekly digest — water, steps, sleep and nutrition, day by day">
-      <img src="assets/shot_06_food.jpg" width="220" height="391" loading="lazy"
+      <img src="assets/shot_02_insights_en.jpg" width="480" height="853" loading="lazy"
+           alt="Snapshot — a relative score for each of five health domains">
+      <img src="assets/shot_03_bodymap_en.jpg" width="480" height="853" loading="lazy"
+           alt="A body map for marking where it hurts">
+      <img src="assets/shot_06_food_en.jpg" width="480" height="853" loading="lazy"
            alt="Nutrition tracking by the recommended plate division">
+      <img src="assets/shot_04_cognitive_en.jpg" width="480" height="853" loading="lazy"
+           alt="Cognitive tests — memory, attention and processing speed">
     </div>
 
-    <div class="card">
-      <h2>What it does</h2>
-      <p>Chronicle lets you record what affects how you feel, over time, and
-      see how those things relate to each other:</p>
-      <ul>
-        <li>symptoms, mood and sleep;</li>
-        <li>nutrition, exercise and medications;</li>
-        <li>biometrics, blood-test results and cognitive tests;</li>
-        <li>insights and periodic reports built from what you logged.</li>
-      </ul>
+    <div class="grid">
+      <div class="card">
+        <h2>What you record</h2>
+        <p>Chronicle lets you record what affects how you feel, over time, and
+        see how those things relate to each other:</p>
+        <ul>
+          <li>symptoms, mood and sleep;</li>
+          <li>nutrition, exercise and medications;</li>
+          <li>biometrics, blood-test results, questionnaires and cognitive
+          tests.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Not just a diary</h2>
+        <ul>
+          <li><strong>Blood-test import from a PDF</strong> — your health
+          fund's file is read on the device itself: test names, results,
+          reference ranges and dates become measures you can follow, without
+          typing a single line.</li>
+          <li><strong>Readings from a smartwatch</strong> — steps, heart
+          rate, sleep and workouts, through Health Connect.</li>
+          <li><strong>Voice notes and barcode scanning</strong> — instead of
+          typing it in.</li>
+          <li><strong>Personal experiment</strong> — test whether one change
+          actually makes a difference for you, and see what came of it.</li>
+          <li><strong>Knowledge centre</strong> — around 290 health
+          entries, from lab tests to sleep, nutrition and mental health:
+          what it is, why it matters, what affects it, and which common
+          beliefs about it are simply wrong. Every entry is built on
+          recognised medical sources.</li>
+          <li><strong>Guided meditations</strong> — nine recorded practices,
+          and guided breathing exercises.</li>
+          <li><strong>Insights and periodic reports</strong> — built from
+          what you recorded.</li>
+        </ul>
+      </div>
+
+
+      <div class="card">
+        <h2>Privacy comes first</h2>
+        <p>No servers, no user accounts, no ads, no analytics, no trackers.
+        Everything is stored locally on the device. If your operating system's
+        backup is on, a copy also sits in <strong>your own cloud account</strong>
+        — not ours, and we receive nothing from it.</p>
+        <p><a href="privacy/">Read the full privacy policy</a> ·
+           <a href="terms/">Terms of service</a></p>
+      </div>
+
+      <div class="note wide">
+        <strong>The app is free.</strong> Anyone who installs it and first opens
+        it <strong>before 1 January 2027</strong> keeps the features open to them
+        free of charge — even if a paid tier opens later.
+      </div>
     </div>
 
-    <div class="card">
-      <h2>Import blood-test results from a PDF</h2>
-      <p>The PDF of your results from the health fund can be imported straight
-      into the app: Chronicle reads the test names, the results, the reference
-      ranges and the dates, and stores them as measures you can follow over
-      time — without typing a single line.</p>
-      <p>The reading happens on the device itself. The file is not sent
-      anywhere.</p>
-    </div>
-
-    <div class="note">
-      <strong>The app is free.</strong> Anyone who installs it and first opens
-      it <strong>before 1 January 2027</strong> keeps the features open to them
-      free of charge — even if a paid tier opens later.
-    </div>
-
-    <div class="card">
-      <h2>Privacy is the architecture, not a promise</h2>
-      <p>No servers, no user accounts, no ads, no analytics, no trackers.
-      Everything is stored locally on the device. If your operating system's
-      backup is on, a copy also sits in <strong>your own cloud account</strong>
-      — not ours, and we receive nothing from it.</p>
-      <p><a href="privacy/">Read the full privacy policy</a> ·
-         <a href="terms/">Terms of service</a></p>
-    </div>
-
-    <div class="card">
-      <h2>Not medical advice</h2>
-      <p>Chronicle is an information and wellbeing tool. It is not a medical
-      device and does not provide medical advice, diagnosis or treatment.</p>
-    </div>
+    <p class="disclaimer">Chronicle is an information and wellbeing tool. It is
+    not a medical device and does not provide medical advice, diagnosis or
+    treatment.</p>
 
     <footer>
       <p><strong>Developer and publisher:</strong> Offir Laufer, a sole
@@ -233,7 +525,7 @@
   "@type": "SoftwareApplication",
   "name": "Chronicle",
   "applicationCategory": "HealthApplication",
-  "operatingSystem": "Android",
+  "operatingSystem": "Android, iOS",
   "inLanguage": "he-IL",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "ILS" },
   "description": "מעקב בריאות, תסמינים, שינה, תזונה ובדיקות דם, כולל ייבוא תוצאות מקובצי PDF של קופות החולים. המידע נשמר במכשיר; איננו מפעילים שרתים.",
