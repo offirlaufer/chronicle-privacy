@@ -3,19 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Chronicle — מעקב בריאות ותסמינים</title>
-<meta name="description" content="Chronicle — אפליקציה למעקב בריאות, תסמינים, שינה, תזונה ובדיקות דם, כולל ייבוא תוצאות מקובצי PDF של קופות החולים. איננו מפעילים שרתים ואיננו מקבלים את הנתונים.">
+<title>Chronicle - מעקב בריאות ותסמינים</title>
+<meta name="description" content="Chronicle - אפליקציה למעקב בריאות, תסמינים, שינה, תזונה ובדיקות דם, כולל ייבוא תוצאות מקובצי PDF של קופות החולים. איננו מפעילים שרתים ואיננו מקבלים את הנתונים.">
 <link rel="canonical" href="https://offirlaufer.com/">
 <link rel="icon" href="assets/logo.png" type="image/png">
 <link rel="apple-touch-icon" href="assets/logo.png">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Chronicle — מעקב בריאות ותסמינים">
-<meta property="og:description" content="מעקב בריאות, תסמינים, שינה, תזונה ובדיקות דם — בלי שרתים ובלי חשבונות.">
+<meta property="og:title" content="Chronicle - מעקב בריאות ותסמינים">
+<meta property="og:description" content="מעקב בריאות, תסמינים, שינה, תזונה ובדיקות דם - בלי שרתים ובלי חשבונות.">
 <meta property="og:url" content="https://offirlaufer.com/">
 <meta property="og:image" content="https://offirlaufer.com/assets/shot_01_home.jpg">
 <meta property="og:locale" content="he_IL">
 <!--
-  The publisher's one-page site — offirlaufer.com, GitHub Pages out of
+  The publisher's one-page site - offirlaufer.com, GitHub Pages out of
   offirlaufer/chronicle-privacy. The source of truth is
   docs/play/landing_page.html in the Chronicle repo, and nothing syncs the
   two automatically: see the header of tools/publish_privacy.sh for the day
@@ -24,14 +24,14 @@
   Rewritten 2026-11-14, with three jobs beyond "a website exists":
 
     * It is the only Hebrew text about this app that Google Search can
-      crawl — a Play listing is not indexed as a web page. That is what the
+      crawl - a Play listing is not indexed as a web page. That is what the
       lab-import section is for: it names the thing people actually type.
     * It carries the grandfathering date, which is the only urgency the
       product has and appeared nowhere a reader would meet it.
     * It links to the store, with screenshots, so arriving here can end in
       an install rather than in a privacy policy.
 
-  ⚠️ The privacy wording is load-bearing and is NOT free text — see the
+  ⚠️ The privacy wording is load-bearing and is NOT free text - see the
   warning block in docs/play/store_listing.md. "נשמר במכשיר שלך בלבד" has
   been forbidden since allowBackup went true on 2026-10-06, and the meta
   description of the previous version of this page was still carrying it.
@@ -41,7 +41,7 @@
   ── Layout pass, 2026-11-15 ────────────────────────────────────────────
   The container was 760px, which on a laptop is a column of text down the
   middle of a very empty page. It is 1140px now, and the width is spent on
-  the two things that were actually cramped — the screenshot strip, which
+  the two things that were actually cramped - the screenshot strip, which
   now shows all five frames without scrolling on a desktop, and the content
   sections, which sit in a two-column grid.
 
@@ -167,7 +167,7 @@
      Official artwork only, unmodified: both Google and Apple require it,
      and both specify a minimum size and clear space around the badge.
      Height is set and width left to the aspect ratio so neither is
-     stretched. A badge with no live listing behind it is NOT a link —
+     stretched. A badge with no live listing behind it is NOT a link -
      is NOT a link; see .stores .as.                                     */
   .stores { display:flex; gap:10px; justify-content:center; flex-wrap:wrap;
     align-items:flex-start; margin:0 0 6px; padding:0; }
@@ -187,11 +187,11 @@
     transition:transform .18s cubic-bezier(.22,1,.36,1); }
   .stores a:hover { transform:translateY(-2px); }
   /* NEITHER badge is a link, and both are shown UNMODIFIED. Apple's
-     marketing guidelines forbid altering the artwork — a grayscale filter
+     marketing guidelines forbid altering the artwork - a grayscale filter
      and a dimmed opacity are both alterations, and the first version of
      this did both. The caption underneath is what says a store is not live
      yet; saying it in words is clearer than a visual state nobody decodes.
-     Google is not live either as of 2026-11-15 — that listing has never
+     Google is not live either as of 2026-11-15 - that listing has never
      been published, so the link it used to carry would have 404'd.
 
      To turn one back on, swap its <span class="store"> for an <a href>.
@@ -230,11 +230,23 @@
      feature lists underneath cannot: a test and a decision happen at a
      clinic, the keeping-track happens at home with nobody helping.
      Deliberately silent on prevention, risk, and what the health system
-     does or fails to do — that is a clinical claim on a Medical-category
+     does or fails to do - that is a clinical claim on a Medical-category
      listing, and this app is not a medical device. */
-  .lede { max-width:62ch; margin:4px auto 30px; text-align:center;
+  /* 75ch, the TOP of the readable range rather than the bottom. The cards
+     below run the full 1100px (123ch), and a lede capped at 62 read as
+     orphaned beside them rather than as a deliberate column. Not widened
+     to match the grid: past ~75 characters the eye starts losing its place
+     on the return sweep, and that is worse in Hebrew, where the sweep is
+     right-to-left and there are fewer word-shape cues to land on. The
+     cards escape the rule because each one is ~320px, so the text inside
+     them is already a narrow column; the grid is wide, the measure is not. */
+  .lede { max-width:75ch; margin:4px auto 30px; text-align:center;
     font-size:1.04rem; line-height:1.7; color:var(--ink); }
   .lede b { color:var(--wordmark); }
+  /* The <br> splits the situation from what the app does about it. The two
+     halves are one paragraph on purpose - two <p>s would double the gap and
+     read as separate sections rather than as a turn in the same thought. */
+  .lede br { content:''; display:block; margin-bottom:.45em; }
   .store small { font-size:.78rem; color:var(--muted); line-height:1.35;
     text-align:center; max-width:32ch; }
 
@@ -250,7 +262,7 @@
      than the column gap (34 vs 28) because each card carries its heading
      at the top, so the vertical neighbour it has to separate from is
      text, not another phone. Four sizes
-     were looked at on screen rather than reasoned about — 200px in a
+     were looked at on screen rather than reasoned about - 200px in a
      single row, where the app's own text inside the phone cannot be read
      at all; 356px across the full container, overbearing; 282px; and this.
      The track minimum is 240 rather than 260 ON PURPOSE: at exactly 260
@@ -309,7 +321,7 @@
 
   <div class="hero">
     <img class="logo" src="assets/logo.png" width="104" height="104"
-         alt="הסמל של Chronicle — האות C בנויה מעלים">
+         alt="הסמל של Chronicle - האות C בנויה מעלים">
     <h1>Chronicle<span class="sheen" aria-hidden="true">Chronicle</span></h1>
     <p class="motto">הבריאות שלך. הסיפור שלך.</p>
     <p class="tagline">תעדו תסמינים, שינה, תזונה ופעילות, גלו את הקשרים
@@ -319,36 +331,38 @@
     <div class="stores">
       <!-- NOT a link while the listing is in review: the URL 404s until
            Google approves it. Swap this <span> back to the <a href> kept in
-           git (commit 91f8537) the day Play goes live — the referrer tag on
+           git (commit 91f8537) the day Play goes live - the referrer tag on
            that href is what makes site installs attributable. -->
       <span class="store gp">
         <img src="assets/badge-google-play-he.png" alt="Google Play">
       </span>
     </div>
-    <p class="store-note">האפליקציה נמצאת בבדיקה ב-Google Play ואצל Apple.
-    הקישורים יתווספו עם האישור.</p>
+    <p class="store-note">האפליקציה בתהליך אישור ב-Google Play וב-App Store.
+    הקישורים יתווספו כאן ברגע שהיא תהיה זמינה להורדה.</p>
   </div>
 
   <div class="shots">
     <img src="assets/shot_01_home.jpg" width="480" height="853" loading="lazy"
-         alt="מסך הבית של Chronicle — ציון בריאות יומי, צעדים וזמן מסך">
+         alt="מסך הבית של Chronicle - ציון בריאות יומי, צעדים וזמן מסך">
     <img src="assets/shot_05_weekly_digest.jpg" width="480" height="853" loading="lazy"
-         alt="סיכום שבועי — מים, צעדים, שינה ותזונה, יום אחר יום">
+         alt="סיכום שבועי - מים, צעדים, שינה ותזונה, יום אחר יום">
     <img src="assets/shot_02_insights.jpg" width="480" height="853" loading="lazy"
-         alt="תמונת מצב — ציון יחסי לכל אחד מחמישה תחומי בריאות">
+         alt="תמונת מצב - ציון יחסי לכל אחד מחמישה תחומי בריאות">
     <img src="assets/shot_03_bodymap.jpg" width="480" height="853" loading="lazy"
          alt="מפת גוף לסימון מקום הכאב">
     <img src="assets/shot_06_food.jpg" width="480" height="853" loading="lazy"
          alt="מעקב תזונה לפי חלוקת הצלחת המומלצת">
     <img src="assets/shot_04_cognitive.jpg" width="480" height="853" loading="lazy"
-         alt="בדיקות קוגניטיביות — זיכרון, קשב ומהירות עיבוד">
+         alt="בדיקות קוגניטיביות - זיכרון, קשב ומהירות עיבוד">
   </div>
 
-  <p class="lede">עושים בדיקת דם. מישהו קורא אותה, אולי משנה תרופה או
-  ממליץ על שינוי, וקובע תור נוסף בעוד חצי שנה. מה שקורה באמצע נשאר עליכם,
-  ואין שום דבר שעוקב אחרי זה. <b>Chronicle נועדה לחצי השנה הזאת</b> —
-  התוצאה נשמרת לצד הקודמות, אפשר לראות מה המספר עשה לאורך הזמן, ויש
-  תזכורת מתי הגיע הזמן למדוד שוב.</p>
+  <p class="lede">מי שחי עם מיגרנות רוצה לדעת מה מקדים אותן. מי שהתחיל
+  תרופה חדשה רוצה לראות אם משהו באמת השתנה. מי שעוקב אחרי לחץ דם רוצה את
+  המספר לאורך זמן, לא פעם בחצי שנה.<br>
+  <b>בכל המקרים צריך אותו דבר: תיעוד שנמשך יותר משבוע.</b> ב-Chronicle זה
+  כמה הקשות. בוחרים מרשימות מוכנות, מסמנים את מקום הכאב על מפת גוף, או
+  מכתיבים הערה. השעון מוסיף שינה, צעדים ואימונים לבד, והכול נשמר במכשיר
+  שלכם.</p>
 
   <div class="grid">
     <div class="card">
@@ -365,25 +379,25 @@
     <div class="card">
       <h2>לא רק יומן</h2>
       <ul>
-        <li><strong>סיכום לקראת תור אצל רופא/ה</strong> — בוחרים על אילו
+        <li><strong>סיכום לקראת תור אצל רופא/ה</strong> - בוחרים על אילו
         תסמינים התור, והאפליקציה בונה מהתיעוד סיכום מסודר: כל כמה זמן,
         באיזו עוצמה, לאיזה כיוון זה הולך, ולצד זה התרופות הנוכחיות והמדדים
         האחרונים.</li>
-        <li><strong>ייבוא בדיקות דם מקובץ PDF</strong> — הקובץ מקופת החולים
+        <li><strong>ייבוא בדיקות דם מקובץ PDF</strong> - הקובץ מקופת החולים
         נקרא במכשיר עצמו: שמות הבדיקות, התוצאות, טווחי הייחוס והתאריכים
         נשמרים כמדדים שאפשר לעקוב אחריהם, בלי להקליד שורה אחת.</li>
-        <li><strong>קריאה משעון חכם</strong> — צעדים, דופק, שינה ואימונים,
+        <li><strong>קריאה משעון חכם</strong> - צעדים, דופק, שינה ואימונים,
         דרך Health Connect.</li>
-        <li><strong>תיעוד קולי וסריקת ברקוד</strong> — במקום להקליד.</li>
-        <li><strong>ניסוי אישי</strong> — לבדוק אם שינוי אחד באמת משנה משהו
+        <li><strong>תיעוד קולי וסריקת ברקוד</strong> - במקום להקליד.</li>
+        <li><strong>ניסוי אישי</strong> - לבדוק אם שינוי אחד באמת משנה משהו
         אצלך, ולראות מה יצא.</li>
-        <li><strong>מרכז ידע</strong> — כ-290 ערכים בריאותיים, מבדיקות
+        <li><strong>מרכז ידע</strong> - כ-290 ערכים בריאותיים, מבדיקות
         מעבדה ועד שינה, תזונה ובריאות הנפש: מה זה, למה זה משנה, מה משפיע
         על זה ואילו אמונות נפוצות פשוט אינן נכונות. כל הערכים מבוססים על
         מקורות רפואיים מוכרים.</li>
-        <li><strong>מדיטציות מודרכות</strong> — תשעה תרגולים מוקלטים,
+        <li><strong>מדיטציות מודרכות</strong> - תשעה תרגולים מוקלטים,
         ותרגילי נשימה מודרכים.</li>
-        <li><strong>תובנות ודוחות תקופתיים</strong> — מבוססים על מה
+        <li><strong>תובנות ודוחות תקופתיים</strong> - מבוססים על מה
         שתיעדת.</li>
       </ul>
     </div>
@@ -393,7 +407,7 @@
       <h2>הפרטיות קודמת לכול</h2>
       <p>אין שרתים, אין חשבונות משתמש, אין פרסום, אין אנליטיקה ואין כלי מעקב.
       המידע נשמר מקומית במכשיר. אם גיבוי מערכת ההפעלה פעיל, עותק נשמר
-      <strong>בחשבון הענן הפרטי שלך</strong> — לא אצלנו, ואיננו מקבלים ממנו דבר.</p>
+      <strong>בחשבון הענן הפרטי שלך</strong> - לא אצלנו, ואיננו מקבלים ממנו דבר.</p>
       <p><a href="privacy/">מדיניות הפרטיות המלאה</a> ·
          <a href="terms/">תנאי השימוש</a></p>
     </div>
@@ -401,7 +415,7 @@
     <div class="note wide">
       <strong>האפליקציה חינמית.</strong> מי שמתקין ומפעיל אותה לראשונה
       <strong>לפני 1 בינואר 2027</strong> ימשיך לקבל ללא תשלום את התכונות
-      שפתוחות לו — גם אם בהמשך ייפתח מסלול בתשלום.
+      שפתוחות לו - גם אם בהמשך ייפתח מסלול בתשלום.
     </div>
   </div>
 
@@ -425,13 +439,13 @@
 
     ⚠️ Both halves' store links point at com.symptomics.chronicle, the Hebrew
     edition. The English edition ships as a SEPARATE app record
-    (com.symptomics.chronicle.en — see docs/play/store_listing.md and the
+    (com.symptomics.chronicle.en - see docs/play/store_listing.md and the
     two-editions note in memory). When it is live, this half's CTA changes and
     the Hebrew one does not.
 
     The screenshots below are the ENGLISH frames (`shot_*_en.jpg`), shot
     from the English build on 2026-11-15 with English headlines. Until then
-    this half showed the Hebrew ones, headlines burnt in — an English reader
+    this half showed the Hebrew ones, headlines burnt in - an English reader
     looking at an app in a script they could not read. Both sets are built
     by tools/store_mockups.py and sized by tools/site_shots.py; keep them in
     step, because nothing checks that the two halves show the same screens.
@@ -439,7 +453,7 @@
   <div class="en">
     <div class="hero">
       <img class="logo" src="assets/logo.png" width="104" height="104"
-           alt="The Chronicle mark — the letter C built from leaves">
+           alt="The Chronicle mark - the letter C built from leaves">
       <h1>Chronicle<span class="sheen" aria-hidden="true">Chronicle</span></h1>
       <p class="motto">Your Health. Your Story.</p>
       <p class="tagline">Track symptoms, sleep, food and activity, see the
@@ -451,31 +465,35 @@
           <img src="assets/badge-google-play-en.png" alt="Google Play">
         </span>
       </div>
-      <p class="store-note">The app is in review with Google Play and with
-      Apple. The links go up on approval.</p>
+      <p class="store-note">The app is going through store approval on Google
+      Play and on the App Store. The links go up here as soon as it is
+      available to download.</p>
     </div>
 
     <div class="shots">
       <img src="assets/shot_01_home_en.jpg" width="480" height="853" loading="lazy"
-           alt="Chronicle's home screen — daily health score, steps and screen time">
+           alt="Chronicle's home screen - daily health score, steps and screen time">
       <img src="assets/shot_05_weekly_digest_en.jpg" width="480" height="853" loading="lazy"
-           alt="Weekly digest — water, steps, sleep and nutrition, day by day">
+           alt="Weekly digest - water, steps, sleep and nutrition, day by day">
       <img src="assets/shot_02_insights_en.jpg" width="480" height="853" loading="lazy"
-           alt="Snapshot — a relative score for each of five health domains">
+           alt="Snapshot - a relative score for each of five health domains">
       <img src="assets/shot_03_bodymap_en.jpg" width="480" height="853" loading="lazy"
            alt="A body map for marking where it hurts">
       <img src="assets/shot_06_food_en.jpg" width="480" height="853" loading="lazy"
            alt="Nutrition tracking by the recommended plate division">
       <img src="assets/shot_04_cognitive_en.jpg" width="480" height="853" loading="lazy"
-           alt="Cognitive tests — memory, attention and processing speed">
+           alt="Cognitive tests - memory, attention and processing speed">
     </div>
 
-    <p class="lede">You have a blood test. Someone reads it, maybe changes
-    a medication or suggests a change, and books you in again in six months.
-    What happens in between is yours to manage, and nothing is keeping track
-    of it. <b>Chronicle is for those six months</b> — the result sits beside
-    the earlier ones, you can see what the number has been doing, and it
-    reminds you when it is time to measure again.</p>
+    <p class="lede">If you live with migraines, you want to know what comes
+    before them. If you have started a new medication, you want to see
+    whether anything actually changed. If you are watching your blood
+    pressure, you want the number over time, not once every six months.<br>
+    <b>All of it needs the same thing: tracking that lasts longer than a
+    week.</b> In Chronicle that is a few taps. Pick from ready-made lists,
+    mark where it hurts on a body map, or dictate a note. Your watch adds
+    sleep, steps and workouts on its own, and everything stays on your
+    device.</p>
 
     <div class="grid">
       <div class="card">
@@ -493,28 +511,28 @@
       <div class="card">
         <h2>Not just a diary</h2>
         <ul>
-          <li><strong>A summary for a doctor's appointment</strong> — pick
+          <li><strong>A summary for a doctor's appointment</strong> - pick
           which symptoms the visit is about and the app builds a structured
           recap from what you logged: how often, how severe, which way it is
           heading, alongside your current medications and latest readings.</li>
-          <li><strong>Blood-test import from a PDF</strong> — your health
+          <li><strong>Blood-test import from a PDF</strong> - your health
           fund's file is read on the device itself: test names, results,
           reference ranges and dates become measures you can follow, without
           typing a single line.</li>
-          <li><strong>Readings from a smartwatch</strong> — steps, heart
+          <li><strong>Readings from a smartwatch</strong> - steps, heart
           rate, sleep and workouts, through Health Connect.</li>
-          <li><strong>Voice notes and barcode scanning</strong> — instead of
+          <li><strong>Voice notes and barcode scanning</strong> - instead of
           typing it in.</li>
-          <li><strong>Personal experiment</strong> — test whether one change
+          <li><strong>Personal experiment</strong> - test whether one change
           actually makes a difference for you, and see what came of it.</li>
-          <li><strong>Knowledge centre</strong> — around 290 health
+          <li><strong>Knowledge centre</strong> - around 290 health
           entries, from lab tests to sleep, nutrition and mental health:
           what it is, why it matters, what affects it, and which common
           beliefs about it are simply wrong. Every entry is built on
           recognised medical sources.</li>
-          <li><strong>Guided meditations</strong> — nine recorded practices,
+          <li><strong>Guided meditations</strong> - nine recorded practices,
           and guided breathing exercises.</li>
-          <li><strong>Insights and periodic reports</strong> — built from
+          <li><strong>Insights and periodic reports</strong> - built from
           what you recorded.</li>
         </ul>
       </div>
@@ -525,7 +543,7 @@
         <p>No servers, no user accounts, no ads, no analytics, no trackers.
         Everything is stored locally on the device. If your operating system's
         backup is on, a copy also sits in <strong>your own cloud account</strong>
-        — not ours, and we receive nothing from it.</p>
+        - not ours, and we receive nothing from it.</p>
         <p><a href="privacy/">Read the full privacy policy</a> ·
            <a href="terms/">Terms of service</a></p>
       </div>
@@ -533,7 +551,7 @@
       <div class="note wide">
         <strong>The app is free.</strong> Anyone who installs it and first opens
         it <strong>before 1 January 2027</strong> keeps the features open to them
-        free of charge — even if a paid tier opens later.
+        free of charge - even if a paid tier opens later.
       </div>
     </div>
 
@@ -562,7 +580,6 @@
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "ILS" },
   "description": "מעקב בריאות, תסמינים, שינה, תזונה ובדיקות דם, כולל ייבוא תוצאות מקובצי PDF של קופות החולים. המידע נשמר במכשיר; איננו מפעילים שרתים.",
   "url": "https://offirlaufer.com/",
-  "installUrl": "https://play.google.com/store/apps/details?id=com.symptomics.chronicle",
   "author": { "@type": "Organization", "name": "Chronicle", "email": "support@offirlaufer.com" }
 }
 </script>
