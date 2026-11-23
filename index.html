@@ -1,10 +1,75 @@
 <!doctype html>
-<html lang="he" dir="rtl">
+<html lang="he" dir="rtl"><!-- replaced at runtime by the language picker below; these are the no-JS fallback -->
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Chronicle - מעקב בריאות ותסמינים</title>
-<meta name="description" content="Chronicle - אפליקציה למעקב בריאות, תסמינים, שינה, תזונה ובדיקות דם, כולל ייבוא תוצאות מקובצי PDF של קופות החולים. איננו מפעילים שרתים ואיננו מקבלים את הנתונים.">
+
+<!-- Which language this visitor gets.
+     Runs before paint, because setting it after would show one language and
+     then swap it. Order: a choice they made before, else the browser's own
+     preference, else English - the English edition is the one aimed at
+     people who arrive without a preference we can read.
+     If this script does not run, no data-lang is set, and the CSS below
+     leaves BOTH halves visible: the page degrades to what it was. -->
+<script>
+(function () {
+  var KEY = 'chronicle-lang', pick = null;
+  try { pick = localStorage.getItem(KEY); } catch (e) { /* private mode */ }
+  if (pick !== 'he' && pick !== 'en') {
+    var tags = (navigator.languages && navigator.languages.length)
+      ? navigator.languages : [navigator.language || ''];
+    // `iw` is the deprecated ISO code for Hebrew and some browsers still send it.
+    // Matched with an explicit separator rather than a word-boundary escape: this line was
+    // written with that escape once and a layer of escaping turned it into a literal
+    // BACKSPACE, so the test never matched and every Hebrew browser was
+    // served English - the one thing the detection exists to prevent, and
+    // invisible unless you load the page in a Hebrew browser.
+    pick = tags.some(function (t) { return /^(he|iw)([-_]|$)/i.test(t || ''); }) ? 'he' : 'en';
+  }
+  applyLanguage(pick);
+
+  // This script runs in <head>, BEFORE <title>, the meta description and the
+  // switch exist - so the calls above that reach for them find nothing and do
+  // nothing. That is deliberate: the <html> attributes have to be set before
+  // first paint or the page renders in one language and swaps. The rest is
+  // caught up once the document is parsed.
+  // Found by testing in a Hebrew browser: lang and dir were right while the
+  // title stayed Hebrew on the English page, which no amount of reading the
+  // script would have shown.
+  document.addEventListener('DOMContentLoaded', function () {
+    applyLanguage(document.documentElement.getAttribute('data-lang') || pick);
+  });
+})();
+
+// Shared by the opening choice and the switch, so the two cannot drift apart.
+// The <title> and the meta description are part of the page's language too:
+// a Hebrew title over an English page is what a search result would show.
+function applyLanguage(lang) {
+  var he = lang === 'he';
+  var d = document.documentElement;
+  d.setAttribute('data-lang', lang);
+  d.setAttribute('lang', lang);
+  d.setAttribute('dir', he ? 'rtl' : 'ltr');
+
+  var t = document.getElementById('pagetitle');
+  if (t) t.textContent = he
+    ? 'Chronicle - מעקב בריאות ותסמינים'
+    : 'Chronicle - Health & Symptom Diary';
+
+  var m = document.querySelector('meta[name="description"]');
+  if (m) m.setAttribute('content', m.getAttribute(he ? 'data-he' : 'data-en'));
+
+  // display:none did NOT keep the hidden label out of the accessible name,
+  // so the name is stated outright and both labels are decoration.
+  var b = document.getElementById('langswap');
+  if (b) b.setAttribute('aria-label',
+    he ? 'Switch to English' : 'מעבר לעברית');
+}
+</script>
+<title id="pagetitle">Chronicle - מעקב בריאות ותסמינים</title>
+<meta name="description" content="Chronicle - אפליקציה למעקב בריאות, תסמינים, שינה, תזונה ובדיקות דם, כולל ייבוא תוצאות מקובצי PDF של קופות החולים. איננו מפעילים שרתים ואיננו מקבלים את הנתונים."
+      data-he="Chronicle - אפליקציה למעקב בריאות, תסמינים, שינה, תזונה ובדיקות דם, כולל ייבוא תוצאות מקובצי PDF של קופות החולים. איננו מפעילים שרתים ואיננו מקבלים את הנתונים."
+      data-en="Chronicle - a private diary for health, symptoms, sleep, nutrition and lab results, with blood-test PDFs read on the device. We run no servers and never receive your data.">
 <link rel="canonical" href="https://offirlaufer.com/">
 <link rel="icon" href="assets/logo.png" type="image/png">
 <link rel="apple-touch-icon" href="assets/logo.png">
@@ -310,6 +375,35 @@
     margin:18px 2px 0; padding-top:14px; border-top:1px solid var(--line); }
   footer { color:var(--muted); font-size:.9rem; margin-top:28px; }
 
+  /* ── One language at a time ────────────────────────────────────────────
+     Both halves ship in the page; `data-lang` on <html> decides which is
+     drawn. With no `data-lang` - the script above blocked or failed - both
+     stay visible, which is the old behaviour rather than a blank page.
+
+     Each half states its OWN direction rather than inheriting <html dir>,
+     so a half is laid out correctly even in the moment before the script
+     runs, and so the English half never renders right-to-left. This page's
+     CSS uses no physical left/right properties, which is what makes
+     flipping <html dir> safe at all. */
+  .he { direction:rtl; text-align:right; }
+  [data-lang="en"] .he { display:none; }
+  [data-lang="he"] .en { display:none; }
+
+  /* The switch. Hidden without `data-lang`, because it cannot work then. */
+  .langbar { display:none; }
+  [data-lang] .langbar { display:flex; justify-content:flex-end;
+    max-width:94ch; margin:0 auto; padding:14px 20px 0; }
+  .langswap { font:inherit; font-size:0.95rem; font-weight:600;
+    color:var(--teal); background:rgba(255,255,255,0.78);
+    border:1px solid rgba(0,109,119,0.28); border-radius:999px;
+    padding:7px 16px; cursor:pointer; line-height:1.2;
+    transition:background 140ms ease, border-color 140ms ease; }
+  .langswap:hover { background:#fff; border-color:var(--teal); }
+  .langswap:focus-visible { outline:2px solid var(--teal); outline-offset:2px; }
+  /* Offer the language you are NOT reading. */
+  [data-lang="he"] .to-he { display:none; }
+  [data-lang="en"] .to-en { display:none; }
+
   /* The English half mirrors the Hebrew one and runs left-to-right. The
      hero stays centred in both; only the body copy changes side. */
   .en { direction:ltr; text-align:left; }
@@ -317,8 +411,16 @@
 </style>
 </head>
 <body>
+
+<nav class="langbar" aria-label="Language">
+  <button type="button" id="langswap" class="langswap" aria-label="Switch language">
+    <span class="to-he" lang="he" aria-hidden="true">עברית</span><span class="to-en" lang="en" aria-hidden="true">English</span>
+  </button>
+</nav>
+
 <main>
 
+  <div class="he">
   <div class="hero">
     <img class="logo" src="assets/logo.png" width="104" height="104"
          alt="הסמל של Chronicle - האות C בנויה מעלים">
@@ -450,6 +552,8 @@
     by tools/store_mockups.py and sized by tools/site_shots.py; keep them in
     step, because nothing checks that the two halves show the same screens.
   -->
+  </div><!-- /.he -->
+
   <div class="en">
     <div class="hero">
       <img class="logo" src="assets/logo.png" width="104" height="104"
@@ -569,6 +673,21 @@
 
 </main>
 
+<!-- Switching is available in BOTH directions and the choice is remembered:
+     an Israeli visitor who wants English gets English, and keeps it on the
+     next visit. Auto-detection only picks the opening language. -->
+<script>
+(function () {
+  var btn = document.getElementById('langswap');
+  if (!btn) return;
+  btn.addEventListener('click', function () {
+    var next = document.documentElement.getAttribute('data-lang') === 'he' ? 'en' : 'he';
+    applyLanguage(next);
+    try { localStorage.setItem('chronicle-lang', next); } catch (e) { /* private mode */ }
+  });
+})();
+</script>
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -576,7 +695,7 @@
   "name": "Chronicle",
   "applicationCategory": "HealthApplication",
   "operatingSystem": "Android, iOS",
-  "inLanguage": "he-IL",
+  "inLanguage": ["he-IL", "en"],
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "ILS" },
   "description": "מעקב בריאות, תסמינים, שינה, תזונה ובדיקות דם, כולל ייבוא תוצאות מקובצי PDF של קופות החולים. המידע נשמר במכשיר; איננו מפעילים שרתים.",
   "url": "https://offirlaufer.com/",
