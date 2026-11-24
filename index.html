@@ -15,7 +15,10 @@
 (function () {
   var KEY = 'chronicle-lang', pick = null;
   try { pick = localStorage.getItem(KEY); } catch (e) { /* private mode */ }
-  if (pick !== 'he' && pick !== 'en') {
+
+  var chose = (pick === 'he' || pick === 'en');
+  var hebrewBrowser = false;
+  if (!chose) {
     var tags = (navigator.languages && navigator.languages.length)
       ? navigator.languages : [navigator.language || ''];
     // `iw` is the deprecated ISO code for Hebrew and some browsers still send it.
@@ -24,8 +27,36 @@
     // BACKSPACE, so the test never matched and every Hebrew browser was
     // served English - the one thing the detection exists to prevent, and
     // invisible unless you load the page in a Hebrew browser.
-    pick = tags.some(function (t) { return /^(he|iw)([-_]|$)/i.test(t || ''); }) ? 'he' : 'en';
+    hebrewBrowser = tags.some(function (t) { return /^(he|iw)([-_]|$)/i.test(t || ''); });
+    pick = hebrewBrowser ? 'he' : 'en';
   }
+
+  // WHO IS OFFERED THE SWITCH is a different question from which language to
+  // draw, and it is answered with a different signal.
+  //
+  // A reader in Tel Aviv may want the other language; a reader in Toronto has
+  // no use for a Hebrew button and it only makes the page look unfinished. So
+  // the bar is shown to Israel and hidden from everyone else.
+  //
+  // Language alone cannot decide that. Plenty of Israelis run an
+  // English-language browser, and keying off `navigator.languages` would serve
+  // them English with NO WAY BACK to the Hebrew edition - which is the larger
+  // of the two mistakes available here. The timezone is what knows where the
+  // machine is, it needs no network and no third party, and it costs nothing
+  // if it is wrong: the worst case is one extra button.
+  //
+  // Not geo-IP. That means asking an outside service who the reader is, on a
+  // page whose whole claim is that nothing leaves the device.
+  var israel = false;
+  try {
+    israel = (Intl.DateTimeFormat().resolvedOptions().timeZone === 'Asia/Jerusalem');
+  } catch (e) { /* no Intl, or it threw: fall through to the language test */ }
+
+  // Anyone who has already switched keeps the bar, or they could not switch back.
+  if (chose || hebrewBrowser || pick === 'he' || israel) {
+    document.documentElement.setAttribute('data-offer', '1');
+  }
+
   applyLanguage(pick);
 
   // This script runs in <head>, BEFORE <title>, the meta description and the
@@ -389,9 +420,13 @@ function applyLanguage(lang) {
   [data-lang="en"] .he { display:none; }
   [data-lang="he"] .en { display:none; }
 
-  /* The switch. Hidden without `data-lang`, because it cannot work then. */
+  /* The switch. Hidden without `data-lang`, because it cannot work then, and
+     hidden without `data-offer`, because a Hebrew button is noise to a reader
+     who has no use for Hebrew. The head script sets `data-offer` for Israel
+     and for anyone who has already chosen; see the reasoning there.
+     Both attributes required, so the no-JS case stays hidden either way. */
   .langbar { display:none; }
-  [data-lang] .langbar { display:flex; justify-content:flex-end;
+  [data-lang][data-offer="1"] .langbar { display:flex; justify-content:flex-end;
     max-width:94ch; margin:0 auto; padding:14px 20px 0; }
   .langswap { font:inherit; font-size:0.95rem; font-weight:600;
     color:var(--teal); background:rgba(255,255,255,0.78);
