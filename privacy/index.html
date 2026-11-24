@@ -3,7 +3,75 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>מדיניות פרטיות — כרוניקל (Chronicle)</title>
+<title id="pagetitle">מדיניות פרטיות — כרוניקל (Chronicle)</title>
+<!-- Language choice, settled before paint.
+
+     The rule is the same one docs/play/landing_page.html carries and the
+     reasoning lives there: the language to DRAW comes from the browser, while
+     WHO IS OFFERED the switch comes from the timezone, because plenty of
+     Israelis run an English-language browser and keying the button off
+     `navigator.languages` would strand them in English with no way back.
+
+     Inline rather than a shared file on purpose. Each of these three pages is
+     published on its own (tools/publish_*.sh) with no build step, so a shared
+     script would be an extra blocking request on the critical path whose 404
+     costs the switch silently. The price is three copies that must be changed
+     together.
+
+     If this script does not run, no `data-lang` is set and the CSS below
+     leaves BOTH halves visible, separator and all: the page degrades to
+     exactly what it was before the switch existed. That matters more here
+     than on the landing page - this is a legal document, and the safe failure
+     is showing everything rather than hiding half of it. -->
+<script>
+(function () {
+  var KEY = 'chronicle-lang', pick = null;
+  try { pick = localStorage.getItem(KEY); } catch (e) { /* private mode */ }
+
+  var chose = (pick === 'he' || pick === 'en');
+  var hebrewBrowser = false;
+  if (!chose) {
+    var tags = (navigator.languages && navigator.languages.length)
+      ? navigator.languages : [navigator.language || ''];
+    // `iw` is the deprecated ISO code for Hebrew and some browsers still send it.
+    // Matched with an explicit separator rather than a word-boundary escape; the
+    // landing page records what happened the time that escape was used.
+    hebrewBrowser = tags.some(function (t) { return /^(he|iw)([-_]|$)/i.test(t || ''); });
+    pick = hebrewBrowser ? 'he' : 'en';
+  }
+
+  var israel = false;
+  try {
+    israel = (Intl.DateTimeFormat().resolvedOptions().timeZone === 'Asia/Jerusalem');
+  } catch (e) { /* no Intl, or it threw: fall through to the language test */ }
+
+  // Anyone who has already switched keeps the bar, or they could not switch back.
+  if (chose || hebrewBrowser || pick === 'he' || israel) {
+    document.documentElement.setAttribute('data-offer', '1');
+  }
+
+  applyLanguage(pick);
+
+  // This runs before <title> and the switch exist, so the calls that reach for
+  // them do nothing now and are caught up once the document is parsed. The
+  // <html> attributes have to be set before first paint or the page renders in
+  // one language and swaps.
+  document.addEventListener('DOMContentLoaded', function () {
+    applyLanguage(document.documentElement.getAttribute('data-lang') || pick);
+  });
+})();
+
+function applyLanguage(lang) {
+  var he = lang === 'he';
+  var d = document.documentElement;
+  d.setAttribute('data-lang', lang);
+  d.setAttribute('lang', lang);
+  d.setAttribute('dir', he ? 'rtl' : 'ltr');
+
+  var t = document.getElementById('pagetitle');
+  if (t) t.textContent = he ? 'מדיניות פרטיות — כרוניקל (Chronicle)' : 'Privacy Policy — Chronicle';
+}
+</script>
 <style>
   :root { --teal:#006D77; --ink:#1A1A2E; --muted:#5b6670; }
   * { box-sizing:border-box; }
@@ -22,10 +90,41 @@
   .en { direction:ltr; text-align:left; }
   .en h1, .en h2 { text-align:left; }
   code { background:#eef2f5; padding:1px 5px; border-radius:5px; font-size:.9em; }
+
+  /* Language halves. `.en` already carried its own direction above; `.he` gets
+     the mirror so a half is laid out correctly even before the script runs. */
+  .he { direction:rtl; text-align:right; }
+  [data-lang="en"] .he { display:none; }
+  [data-lang="he"] .en { display:none; }
+  /* The rule between the halves only means anything when both are shown. */
+  [data-lang] .langsep { display:none; }
+
+  /* The switch. Needs `data-lang` (it cannot work without it) AND `data-offer`
+     (a Hebrew button is noise to a reader with no use for Hebrew), so the
+     no-JS case stays hidden either way. */
+  .langbar { display:none; }
+  [data-lang][data-offer="1"] .langbar { display:flex; justify-content:flex-end;
+    margin:0 0 18px; }
+  .langswap { font:inherit; font-size:0.95rem; font-weight:600;
+    color:var(--teal); background:rgba(255,255,255,0.78);
+    border:1px solid rgba(0,109,119,0.28); border-radius:999px;
+    padding:7px 16px; cursor:pointer; line-height:1.2;
+    transition:background 140ms ease, border-color 140ms ease; }
+  .langswap:hover { background:#fff; border-color:var(--teal); }
+  .langswap:focus-visible { outline:2px solid var(--teal); outline-offset:2px; }
+  /* Offer the language you are NOT reading. */
+  [data-lang="he"] .to-he { display:none; }
+  [data-lang="en"] .to-en { display:none; }
 </style>
 </head>
 <body>
 <main>
+<nav class="langbar" aria-label="Language">
+  <button type="button" id="langswap" class="langswap" aria-label="Switch language">
+    <span class="to-he" lang="he" aria-hidden="true">עברית</span><span class="to-en" lang="en" aria-hidden="true">English</span>
+  </button>
+</nav>
+<div class="he">
   <h1>מדיניות פרטיות — כרוניקל (Chronicle)</h1>
   <p class="meta">תאריך עדכון אחרון: <strong>19 באוקטובר 2026</strong></p>
   <p class="meta"><strong>מי אחראי למידע:</strong> אופיר לאופר, עוסק פטור הרשום
@@ -127,7 +226,9 @@
     רפואי ואינה מהווה ייעוץ, אבחון או טיפול רפואי.</p>
   </div>
 
-  <hr>
+  </div>
+
+  <hr class="langsep">
 
   <div class="en">
     <h1>Privacy Policy — Chronicle (כרוניקל)</h1>
@@ -211,5 +312,19 @@
     </div>
   </div>
 </main>
+<!-- Switching works in BOTH directions and the choice is remembered, so an
+     Israeli reader who wants English keeps it next visit. Detection only picks
+     the opening language. -->
+<script>
+(function () {
+  var btn = document.getElementById('langswap');
+  if (!btn) return;
+  btn.addEventListener('click', function () {
+    var next = document.documentElement.getAttribute('data-lang') === 'he' ? 'en' : 'he';
+    applyLanguage(next);
+    try { localStorage.setItem('chronicle-lang', next); } catch (e) { /* private mode */ }
+  });
+})();
+</script>
 </body>
 </html>
